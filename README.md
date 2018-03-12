@@ -108,7 +108,7 @@ for file in *.csv; do
 done
 ```
 
-The next sentence uploads all the orbis data into the table previously created.
+The next sentence uploads all the orbis data into the previously created table.
 
 ```sql
 use `database_name`;
@@ -118,3 +118,95 @@ INTO TABLE `orbis_all_data` FIELDS TERMINATED BY '\t'
 ESCAPED BY ''
 IGNORE 1 LINES;
 ```
+#### Cleaning imported data
+
+Delete some residuals
+
+```sql
+DELETE FROM guo_all_data WHERE mark = "??Mark";
+DELETE FROM guo_all_data WHERE mark = '﻿"Mark"	Company name';
+DELETE FROM guo_all WHERE bvd_id="BvD ID number";
+DELETE FROM guo_all WHERE bvd_id="GBGGLP1545" LIMIT 1;
+```
+
+### The Data Model
+
+The data model for the first phase (Orbis) is only composed of two tables, one that 
+contains the companies and the other one that store the consolidated subsidiaries from 
+these firms. Here is the create statement for both tables.
+
+```sql
+
+CREATE TABLE `companies` (
+  `company_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `cnty_iso` varchar(2) CHARACTER SET utf8 DEFAULT NULL,
+  `bvd_id` varchar(30) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `guo_bvd_id` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `guo_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `entity_type` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `category` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `operating_revenue_usd` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `nace` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `nace_primary` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `nace_secondary` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `previous_company_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `no_subs` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `bvb_indep_indic` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `guo_nace` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `guo_direct` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `guo_total` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `guo_no_employees` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `guo_city` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `latitude` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `longitude` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `info_date_operating_revenue` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `net_income_eur` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `net_income_usd` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `info_date_total_assets` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `no_employees` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `date_info_no_employees` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `total_assets_eur` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `total_assets_usd` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `current_market_eur` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `current_market_usd` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `main_exchange` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `status_list` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `bvd_indep_indic` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `no_companies_corp_group` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `no_recorded_subs` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `main_production_site` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `main_distribution_site` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `main_domestic_cnty` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `main_foreign_cnty` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  KEY `companies_bvd_id_IDX` (`bvd_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `consolidated_subsidiaries` (
+  `bvd_id` varchar(100) DEFAULT NULL,
+  `subs_level` int(11) DEFAULT NULL,
+  `subs_name` varchar(100) DEFAULT NULL,
+  `subs_bvd_id` varchar(100) DEFAULT NULL,
+  `subs_cnty_iso` varchar(100) DEFAULT NULL,
+  `subs_nace` varchar(100) DEFAULT NULL,
+  `subs_direct` varchar(100) DEFAULT NULL,
+  `subs_total` varchar(100) DEFAULT NULL,
+  `subs_status` varchar(100) DEFAULT NULL,
+  `subs_info_source` varchar(100) DEFAULT NULL,
+  `subs_info_posbl_change` varchar(100) DEFAULT NULL,
+  `subs_city` varchar(100) DEFAULT NULL,
+  `subs_type` varchar(100) DEFAULT NULL,
+  `subs_info_date` varchar(100) DEFAULT NULL,
+  `subs_operating_revenue_usd` varchar(100) DEFAULT NULL,
+  `subs_no_employees` varchar(100) DEFAULT NULL,
+  `subs_total_assets_usd` varchar(100) DEFAULT NULL,
+  `Also known as name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int(11) DEFAULT NULL,
+  `ftype` varchar(12) DEFAULT NULL,
+  KEY `consolidated_subsidiaries_subs_bvd_id_IDX` (`subs_bvd_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+```
+At this point the diagram E-R is this:
+
+![diagram](https://image.ibb.co/hLo8xF/diagram.png)
+
+### Building the data
