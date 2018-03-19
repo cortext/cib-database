@@ -120,7 +120,7 @@ IGNORE 1 LINES;
 ```
 #### Cleaning imported data
 
-Delete some residuals
+Deleting some residuals
 
 ```sql
 DELETE FROM guo_all_data WHERE mark = "??Mark";
@@ -131,7 +131,7 @@ DELETE FROM guo_all WHERE bvd_id="GBGGLP1545" LIMIT 1;
 
 ### The Data Model
 
-The data model for the first phase (Orbis) is only composed of two tables, one that 
+The data model for the first phase (Orbis) is composed of only two tables, one that 
 contains the companies and the other one that store the consolidated subsidiaries from 
 these firms. Here is the create statement for both tables.
 
@@ -181,7 +181,7 @@ CREATE TABLE `companies` (
   KEY `companies_bvd_id_IDX` (`bvd_id`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `consolidated_subsidiaries` (
+CREATE TABLE `subsidiaries` (
   `bvd_id` varchar(100) DEFAULT NULL,
   `subs_level` int(11) DEFAULT NULL,
   `subs_name` varchar(100) DEFAULT NULL,
@@ -209,4 +209,102 @@ At this point the diagram E-R is this:
 
 ![diagram](https://image.ibb.co/hLo8xF/diagram.png)
 
-### Building the data
+## Building the data
+
+Inserting the ORBIS data into the companies and subsidiaries tables. As can be seen, the 
+only needed filter is by the field "mark".
+
+```sql
+INSERT INTO `subsidiaries`
+SELECT `BvD ID`,
+`Level`,
+`Subsidiary name`,
+`Subsidiary BvD ID`,
+......
+......
+`Also known as name` FROM `orbis_all_data` WHERE mark = "";
+
+INSERT INTO `companies`
+SELECT `company_name`,
+`cnty_iso`,
+`bvd_id`,
+.....
+.....
+NULL as `ftype` FROM `orbis_all_data` WHERE mark <> "";
+```
+### Consolidated subsidiaries
+
+For CIB was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries 
+where a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, 
+liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented 
+as those of a single economic entity.
+
+#### Criteria 1
+
+The extracted subsidiaries were filtered by the field subs_status, when the value was UO (ultimate owner) or 
+UO+ (global ultimate owner) which is, the subsidiaries that already have a company that ultimately owns them or controls them.
+
+``` sql 
+
+CREATE TABLE 01_subsidaries_uo_uop AS
+SELECT * FROM subsidiaries WHERE subs_status = 'UO' OR subs_status = 'UO+';
+```
+
+As many subsidiaries still belonged to multiple companies, it was necessary to filter again, but, based on the level of the 
+subsidiary regarding the company, so, was selected the record with the highest level.
+
+```sql
+
+CREATE TABLE 02_subsidaries_filter_min_level
+SELECT a.*
+FROM 01_subsidaries_uo_uop a
+INNER JOIN (
+   SELECT bvd_id, subs_bvd_id, MIN(subs_level) as subs_level
+   FROM 01_subsidaries_uo_uop
+   GROUP BY subs_bvd_id, bvd_id
+   HAVING COUNT(*) > 1
+) b ON a.bvd_id = b.bvd_id AND a.subs_bvd_id = b.subs_bvd_id AND a.subs_level = b.subs_level
+
+CREATE TABLE 02_subsidaries_filter_min_level_take_max_subs_direct
+SELECT *, MAX(subs_direct)
+FROM  .`02_subsidaries_filter_min_level`
+GROUP BY subs_bvd_id
+HAVING COUNT(*) > 1
+
+DELETE FROM 02_subsidaries_filter_min_level
+WHERE subs_bvd_id IN (SELECT subs_bvd_id FROM 02_subsidaries_filter_min_level_take_max_subs_direct);
+
+INSERT INTO 02_subsidaries_filter_min_level
+SELECT * FROM 02_subsidaries_filter_min_level_take_max_subs_direct;
+
+DELETE A FROM 01_subsidaries_uo_uop A
+INNER JOIN 02_subsidaries_filter_min_level B ON
+A.subs_bvd_id = B.subs_bvd_id;
+
+INSERT INTO 01_subsidaries_uo_uop
+SELECT * FROM 02_subsidaries_filter_min_level
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
