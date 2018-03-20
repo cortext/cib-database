@@ -342,7 +342,6 @@ HAVING COUNT(*) < 2;
 ```
 #### Final checks
 
-As a result are the compaines table and the consolidated_subsidiaries table, in the second one is necessary a final verification upload 
-
+As a result, there are the compaines table and the 'consolidated_subsidiaries' table, in the second one was made a final verification uploading the resulted data into ORBIS platform to determine the real and final consolidated entities. 
 
 [-- Deprecated Job --](/deprecated.md)
