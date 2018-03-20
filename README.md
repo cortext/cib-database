@@ -251,10 +251,9 @@ SELECT * FROM subsidiaries WHERE subs_status = 'UO' OR subs_status = 'UO+';
 ```
 
 As many subsidiaries still belonged to multiple companies, it was necessary to filter again, but, based on the level of the 
-subsidiary regarding the company, so, was selected the record with the highest level.
+subsidiary regarding the company. So was selected the record with the highest level.
 
 ```sql
-
 CREATE TABLE 02_subsidaries_filter_min_level
 SELECT a.*
 FROM 01_subsidaries_uo_uop a
@@ -283,28 +282,85 @@ A.subs_bvd_id = B.subs_bvd_id;
 
 INSERT INTO 01_subsidaries_uo_uop
 SELECT * FROM 02_subsidaries_filter_min_level
-
 ```
 
+#### Criteria 2
+
+Still with a remaining good amount of subsidiaries without being analyzed, was used the fields subs_total and subs_direct to 
+determine the rest of consolidated subsidiaries. In ORBIS, "subs_directs" is the "Percentage Owned Direct" where a consolidate 
+entity is represented by the "WO" (wholly owned) code or "MO" (majority owned) code, these symbolize 100% and >50.1% of ownership 
+respectively. Subs_total is the "Percentage Owned Total", this variable is a combination of numbers and string representations 
+such as '>75.00'. Thus the following script extracts all these cases and create a new table with the final filter. 
+(The list of subs_direct values was obtained by doing a `distinct` selection over the field)  
+
+```sql
+CREATE TABLE 02_subsidiaries_filter_MO_WO_51 AS
+SELECT * FROM subsidiaries WHERE subs_direct='MO' OR subs_direct='WO' OR subs_direct > 50 OR
+subs_total='MO' OR subs_total='WO' OR subs_total > 50 OR subs_direct IN
+('>50.00','>50.01','>53.00','>54.99','>55.00','>58.00','>60.00','>65.00',
+'>66.90','>67.00','>69.00','>70.00','>73.00','>75.00','>80.00','>84.00','>85.00','>89.00','>90.00',
+'>93.00','>94.00','>94.90','>95.00','>96.00','>96.60','>97.00','>98.00','>99.00','>99.90','>99.99')
+OR subs_total IN ('>50.00','>50.01','>53.00','>54.99','>55.00','>58.00','>60.00','>65.00',
+'>66.90','>67.00','>69.00','>70.00','>73.00','>75.00','>80.00','>84.00','>85.00','>89.00','>90.00',
+'>93.00','>94.00','>94.90','>95.00','>96.00','>96.60','>97.00','>98.00','>99.00','>99.90','>99.99');
+```
+Again, is required to check if exist duplicate subsidiaries in the table and clean them based on level, besides 
+deleting the overlapping records between criteria one and criteria two. 
+
+```sql
+CREATE TABLE 02_01_subsidiaries_filter_MO_WO_51
+SELECT A.* FROM 02_subsidiaries_filter_MO_WO_51 AS A
+LEFT JOIN 01_subsidaries_uo_uop AS B
+ON A.subs_bvd_id = B.subs_bvd_id
+WHERE B.subs_bvd_id IS NULL;
+
+-- Subsidiaries that belongs only to one company
+CREATE TABLE finalfilter_uo_uop_mo_wo_51 AS
+SELECT *, '2' AS ftype FROM `02_01_subsidiaries_filter_MO_WO_51`
+GROUP BY subs_bvd_id
+HAVING COUNT(*) < 2;
+
+-- Subsidiaries 
+CREATE TABLE consolidated_subsidiaries
+SELECT *, '2' AS ftype FROM 02_01_subsidiaries_filter_MO_WO_51
+GROUP BY subs_bvd_id
+HAVING COUNT(*) < 2;
+
+-- Transforming levels from orbis into numbers
+UPDATE 02_01_subsidiaries_filter_MO_WO_51_temp AS t1
+INNER JOIN (SELECT LENGTH(`subs_level`) - LENGTH(REPLACE(`subs_level`, '.', '')) AS level2, id
+   FROM 02_01_subsidiaries_filter_MO_WO_51_temp) AS t2
+ON t2.id = t1.id
+SET t1.`subs_level` = t2.level2;
+
+-- Taking from level1 the subsidiaries that belongs to two companies and are in level 1
+SELECT A1.company_name, B1.* FROM companies AS A1
+INNER JOIN (
+SELECT A.* FROM 02_01_subsidiaries_filter_MO_WO_51_level_1 AS A
+INNER JOIN (
+SELECT subs_bvd_id FROM 02_01_subsidiaries_filter_MO_WO_51_level_1
+GROUP BY subs_bvd_id
+HAVING COUNT(subs_bvd_id) > 1) AS B ON A.subs_bvd_id = B.subs_bvd_id) AS B1
+ON A1.bvd_id = B1.bvd_id
+ORDER BY B1.subs_bvd_id;
+
+CREATE TABLE 02_02_subsidiaries_filter_MO_WO_51_only_highest_level AS
+SELECT A.* FROM 02_02_subsidiaries_filter_MO_WO_51 AS A
+INNER JOIN (
+SELECT bvd_id, subs_name, subs_bvd_id, MIN(subs_level) as subs_level FROM 02_02_subsidiaries_filter_MO_WO_51
+GROUP BY bvd_id, subs_bvd_id) AS B
+ON A.bvd_id = B.bvd_id AND A.subs_bvd_id = B.subs_bvd_id AND A.subs_level = B.subs_level
+ORDER BY A.subs_bvd_id;
+
+INSERT INTO consolidated_subsidiaries
+SELECT *, '3' AS ftype FROM 02_02_subsidiaries_filter_MO_WO_51_only_highest_level
+GROUP BY subs_bvd_id
+HAVING COUNT(*) < 2;
+```
+#### Final checks
+
+As a result are the compaines table and the consolidated_subsidiaries table, in the second one is necessary a final verification
+upload 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[-- Deprecated Job --](/deprecated.md)
