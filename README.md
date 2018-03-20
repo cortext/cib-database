@@ -1,16 +1,12 @@
 # CIB (Corporate Invetion Board)
 
-The CIB (Corporate Invention Board) dataset is a database characterising the patent portfolios of the largest industrial firms worldwide. 
-The CIB combines information extracted from the Industrial R&D Investment Scoreboard (EU Commission), the ORBIS financial database and 
-the PATSTAT-IFRIS patent database - an enriched version of the Patstat EPO database.
+The CIB (Corporate Invention Board) dataset is a database characterising the patent portfolios of the largest industrial firms worldwide. The CIB combines information extracted from the Industrial R&D Investment Scoreboard (EU Commission), the ORBIS financial database and the PATSTAT-IFRIS patent database - an enriched version of the Patstat EPO database.
 
 ## Importing The ORBIS Data
 
-**ORBIS** has information on over 280 million companies across the globe. It’s the resource for company data. And it makes simple to compare 
-companies internationally. Orbis is mostly used to find, analyse and compare companies for better decision making and increased efficiency.
+**ORBIS** has information on over 280 million companies across the globe. It’s the resource for company data. And it makes simple to compare companies internationally. Orbis is mostly used to find, analyse and compare companies for better decision making and increased efficiency.
 
-Based on the columns defined by ORBIS exported files, were created the first tables, the aim is to import all the ORBIS data file's 
-into the new table. How is not clear the data type, it was assigned VARCHAR type to the columns.
+Based on the columns defined by ORBIS exported files, were created the first tables, the aim is to import all the ORBIS data file's into the new table. How is not clear the data type, it was assigned VARCHAR type to the columns.
 
 ```sql
 CREATE TABLE `orbis_all_data` (
@@ -131,9 +127,7 @@ DELETE FROM guo_all WHERE bvd_id="GBGGLP1545" LIMIT 1;
 
 ### The Data Model
 
-The data model for the first phase (Orbis) is composed of only two tables, one that 
-contains the companies and the other one that store the consolidated subsidiaries from 
-these firms. Here is the create statement for both tables.
+The data model for the first phase (Orbis) is composed of only two tables, one that contains the companies and the other one that store the consolidated subsidiaries from these firms. Here is the create statement for both tables.
 
 ```sql
 
@@ -211,8 +205,7 @@ At this point the diagram E-R is this:
 
 ## Building the data
 
-Inserting the ORBIS data into the companies and subsidiaries tables. As can be seen, the 
-only needed filter is by the field "mark".
+Inserting the ORBIS data into the companies and subsidiaries tables. As can be seen, the only needed filter is by the field "mark".
 
 ```sql
 INSERT INTO `subsidiaries`
@@ -234,15 +227,11 @@ NULL as `ftype` FROM `orbis_all_data` WHERE mark <> "";
 ```
 ### Consolidated subsidiaries
 
-For CIB was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries 
-where a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, 
-liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented 
-as those of a single economic entity.
+For CIB was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries where a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
 
 #### Criteria 1
 
-The extracted subsidiaries were filtered by the field subs_status, when the value was UO (ultimate owner) or 
-UO+ (global ultimate owner) which is, the subsidiaries that already have a company that ultimately owns them or controls them.
+The extracted subsidiaries were filtered by the field subs_status, when the value was UO (ultimate owner) or UO+ (global ultimate owner) which is, the subsidiaries that already have a company that ultimately owns them or controls them.
 
 ``` sql 
 
@@ -286,12 +275,7 @@ SELECT * FROM 02_subsidaries_filter_min_level
 
 #### Criteria 2
 
-Still with a remaining good amount of subsidiaries without being analyzed, was used the fields subs_total and subs_direct to 
-determine the rest of consolidated subsidiaries. In ORBIS, "subs_directs" is the "Percentage Owned Direct" where a consolidate 
-entity is represented by the "WO" (wholly owned) code or "MO" (majority owned) code, these symbolize 100% and >50.1% of ownership 
-respectively. Subs_total is the "Percentage Owned Total", this variable is a combination of numbers and string representations 
-such as '>75.00'. Thus the following script extracts all these cases and create a new table with the final filter. 
-(The list of subs_direct values was obtained by doing a `distinct` selection over the field)  
+Still with a remaining good amount of the subsidiaries without being analyzed, was used the fields subs_total and subs_direct to determine the rest of consolidated subsidiaries. In ORBIS, "subs_directs" is the "Percentage Owned Direct" where a consolidate entity is represented by the "WO" (wholly owned) code or "MO" (majority owned) code, these symbolize 100% and >50.1% of ownership respectively. Subs_total is the "Percentage Owned Total", this variable is a combination of numbers and string representations such as '>75.00'. Thus the following script extracts all these cases and create a new table with the final filter. (The list of subs_direct values was obtained by doing a `distinct` selection over the field)  
 
 ```sql
 CREATE TABLE 02_subsidiaries_filter_MO_WO_51 AS
@@ -304,8 +288,7 @@ OR subs_total IN ('>50.00','>50.01','>53.00','>54.99','>55.00','>58.00','>60.00'
 '>66.90','>67.00','>69.00','>70.00','>73.00','>75.00','>80.00','>84.00','>85.00','>89.00','>90.00',
 '>93.00','>94.00','>94.90','>95.00','>96.00','>96.60','>97.00','>98.00','>99.00','>99.90','>99.99');
 ```
-Again, is required to check if exist duplicate subsidiaries in the table and clean them based on level, besides 
-deleting the overlapping records between criteria one and criteria two. 
+Again, is required to check if exist duplicate subsidiaries in the table and clean them based on level, besides deleting the overlapping records between criteria one and criteria two. 
 
 ```sql
 CREATE TABLE 02_01_subsidiaries_filter_MO_WO_51
@@ -359,8 +342,7 @@ HAVING COUNT(*) < 2;
 ```
 #### Final checks
 
-As a result are the compaines table and the consolidated_subsidiaries table, in the second one is necessary a final verification
-upload 
+As a result are the compaines table and the consolidated_subsidiaries table, in the second one is necessary a final verification upload 
 
 
 [-- Deprecated Job --](/deprecated.md)
