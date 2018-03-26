@@ -227,7 +227,7 @@ NULL as `ftype` FROM `orbis_all_data` WHERE mark <> "";
 ```
 ### Consolidated subsidiaries
 
-For CIB was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries where a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
+For CIB was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
 
 #### Criteria 1
 
@@ -344,4 +344,12 @@ HAVING COUNT(*) < 2;
 
 As a result, there are the compaines table and the 'consolidated_subsidiaries' table, in the second one was made a final verification uploading the resulted data into ORBIS platform to determine the real and final consolidated entities. 
 
-[-- Deprecated Job --](/DEPRECATED.md)
+Based on the previous revisions, it was done a cleaning process to merger some companies or transfer a subsidiary to another company. Is important to clarify that these changed might be already done in the continue updates made by ORBIS. The script with the cleaning action can be found as 'script_cleaning.sql'.
+
+
+#### Deprecated
+
+The next url contain a stored procedure that was written in order to detect which subsidiaries were consolidated and which no. But this action was replaced by manual verification with ORBIS platform.
+Even so the function can be analyzed in the following link.
+
+[-- Deprecated Work --](/DEPRECATED.md)
