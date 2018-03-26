@@ -1,6 +1,4 @@
-
-```sql
-CREATE DEFINER=`gnupablo`@`%` PROCEDURE `.`graph_pruning`()
+CREATE DEFINER=`your_ser`@`%` PROCEDURE `.`graph_pruning`()
 BEGIN
 
 DECLARE couples  INT;
@@ -126,4 +124,3 @@ TAKE ALL SUBS WITH MORE THAN TWO SELECTED COMPANIES
  FROM layer2_couples_from_three_companies_in_the_matrix_pairs;
  END WHILE;
 END
-```
