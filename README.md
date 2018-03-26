@@ -342,7 +342,7 @@ HAVING COUNT(*) < 2;
 ```
 #### Final checks
 
-As a result, there are the compaines table and the 'consolidated_subsidiaries' table, in the second one was made a final verification uploading the resulted data into ORBIS platform to determine the real and final consolidated entities. 
+As a result, there is the companies table and the 'consolidated_subsidiaries' table, in the second one was made a final verification uploading the resulted data into ORBIS platform to determine the real and final consolidated entities. 
 
 Based on the previous revisions, it was done a cleaning process to merger some companies or transfer a subsidiary to another company. Is important to clarify that these changed might be already done in the continue updates made by ORBIS. The script with the cleaning action can be found as 'script_cleaning.sql'.
 
