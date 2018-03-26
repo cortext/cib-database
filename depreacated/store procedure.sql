@@ -1,8 +1,8 @@
-DROP PROCEDURE IF EXISTS graph_pruning ;
+DROP PROCEDURE IF EXISTS pruning_fuction ;
 
 DELIMITER $$
 $$
-CREATE DEFINER=`gnupablo`@`%` PROCEDURE `cib_PatApr17_v2`.`graph_pruning`()
+CREATE DEFINER=`username`@`%` PROCEDURE `pruning_function`()
 BEGIN
 
 DECLARE couples  INT;
@@ -137,6 +137,6 @@ WHILE (couples  > 0) DO
     SELECT COUNT(*) INTO couples
     FROM layer2_couples_from_three_companies_in_the_matrix_pairs;
  
- END WHILE;
+END WHILE;
 END $$
 DELIMITER ;
