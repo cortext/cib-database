@@ -340,7 +340,7 @@ SELECT *, '3' AS ftype FROM 02_02_subsidiaries_filter_MO_WO_51_only_highest_leve
 GROUP BY subs_bvd_id
 HAVING COUNT(*) < 2;
 ```
-#### Final checks
+## Final checks
 
 As a result, there is the companies table and the 'consolidated_subsidiaries' table, in the second one was made a final verification uploading the resulted data into ORBIS platform to determine the real and final consolidated entities. 
 
