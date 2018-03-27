@@ -340,7 +340,7 @@ SELECT *, '3' AS ftype FROM 02_02_subsidiaries_filter_MO_WO_51_only_highest_leve
 GROUP BY subs_bvd_id
 HAVING COUNT(*) < 2;
 ```
-#### Final checks
+## Final checks
 
 As a result, there is the companies table and the 'consolidated_subsidiaries' table, in the second one was made a final verification uploading the resulted data into ORBIS platform to determine the real and final consolidated entities. 
 
@@ -352,4 +352,4 @@ Based on the previous revisions, it was done a cleaning process to merger some c
 The next url contain a stored procedure that was written in order to detect which subsidiaries were consolidated and which no. But this action was replaced by manual verification with ORBIS platform.
 Even so the function can be analyzed in the following link.
 
-[-- Deprecated Work --](/DEPRECATED.md)
+[-- Deprecated Work --](deprecated/)
