@@ -352,4 +352,4 @@ Based on the previous revisions, it was done a cleaning process to merger some c
 The next url contain a stored procedure that was written in order to detect which subsidiaries were consolidated and which no. But this action was replaced by manual verification with ORBIS platform.
 Even so the function can be analyzed in the following link.
 
-[-- Deprecated Work --](/DEPRECATED.md)
+[-- Deprecated Work --](deprecated/)
