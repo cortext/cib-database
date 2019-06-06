@@ -24,7 +24,7 @@ BEGIN
 	    		WHEN manual3 THEN A.manual3
 			    END)');
 	 	
-	SET @SQLText = 	CONCAT(' INSERT INTO cibmatch_log
+    SET @SQLText = 	CONCAT(' INSERT INTO cibmatch_log
 		SELECT new_bvd_id, original, ', @name_clause ,' AS name_for_match, 
 		B.doc_std_name_id, B.doc_std_name, 
 		@matching as match_type, @`filter`, @dt FROM global_ultimate_owners AS A
@@ -32,7 +32,7 @@ BEGIN
 		ON A.cnty_iso = B.iso_ctry
 		AND ', @name_clause ,' = B.doc_std_name;');    
 
- 	PREPARE stmt FROM @SQLText;
+    PREPARE stmt FROM @SQLText;
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
    
