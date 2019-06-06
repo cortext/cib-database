@@ -11,7 +11,8 @@ BEGIN
 	SET @matching = CONCAT(name_match, '|', `method`);
 	SET @dt =  NOW();
 
-	SET @SQLText = 	CONCAT('SELECT new_bvd_id, original, CASE ', name_match, 
+	SET @SQLText = 	CONCAT(' INSERT INTO cibmatch_log
+		SELECT new_bvd_id, original, CASE ', name_match, 
 		' WHEN original THEN A.original 
 		WHEN magerman THEN A.magerman
 		WHEN patstat_std THEN A.patstat_std
@@ -23,7 +24,7 @@ BEGIN
 		@matching as match_type, @`filter`, @dt FROM global_ultimate_owners AS A
 		INNER JOIN cibmatch_patstat_applicants AS B
 		ON A.cnty_iso = B.iso_ctry
-		WHERE (CASE ', name_match, 
+		AND (CASE ', name_match, 
 	    		' WHEN original THEN A.original 
 	    		WHEN magerman THEN A.magerman
 	    		WHEN patstat_std THEN A.patstat_std
@@ -35,6 +36,7 @@ BEGIN
  	PREPARE stmt FROM @SQLText;
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
+   
 END
 END$$
 DELIMITER ;
