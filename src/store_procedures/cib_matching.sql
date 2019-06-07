@@ -36,7 +36,7 @@ BEGIN
  
 	
 	DECLARE matching CHAR(50);
-    DECLARE name_clause VARCHAR(500) DEFAULT '';
+        DECLARE name_clause VARCHAR(500) DEFAULT '';
 	DECLARE join_clause VARCHAR(500) DEFAULT '';
 	DECLARE condition_clause VARCHAR(20) DEFAULT '';
 	DECLARE where_clause VARCHAR(500) DEFAULT '';
@@ -49,7 +49,7 @@ BEGIN
 	    		WHEN manual THEN A.manual
 	    		WHEN manual2 THEN A.manual2
 	    		WHEN manual3 THEN A.manual3
-                END)');
+                        END)');
 	
 	IF `filter` = 'country' THEN
 		SET @join_clause = 'A.cnty_iso = B.iso_ctry ';
@@ -58,11 +58,11 @@ BEGIN
 	
 	IF `method` = 'exact' THEN
         SET @where_clause = CONCAT(@name_clause, ' = B.doc_std_name');
-    ELSEIF `method` = 'like' THEN
+        ELSEIF `method` = 'like' THEN
         SET @where_clause = CONCAT('B.doc_std_name LIKE ', 'CONCAT(', @name_clause, ', " %")');
-    ELSEIF `method` = 'like_prefix' THEN
+        ELSEIF `method` = 'like_prefix' THEN
 		SET @where_clause = CONCAT('B.doc_std_name LIKE ', 'CONCAT("% ",', @name_clause, ')');
-    END IF;	
+        END IF;	
  
 	SET @SQLText = 	CONCAT(' INSERT INTO cibmatch_log
 		SELECT new_bvd_id, original, ', @name_clause ,' AS name_for_match, 
@@ -71,10 +71,9 @@ BEGIN
 		INNER JOIN cibmatch_patstat_applicants AS B
 		ON ', @join_clause, @condition_clause, @where_clause , ';');    
 
-    PREPARE stmt FROM @SQLText;
-    EXECUTE stmt;
-    DEALLOCATE PREPARE stmt;
-   
+	PREPARE stmt FROM @SQLText;
+	EXECUTE stmt;
+    	DEALLOCATE PREPARE stmt;
 END
 END$$
 DELIMITER ;
