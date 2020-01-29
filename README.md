@@ -4,23 +4,44 @@ The CIB (Corporate Invention Board) dataset is a database characterising the pat
 
 ## Why CIB Database
 
-The aim of cib is to facilitate a dataset for the analysis on the transformation of the global patent portfolios in the last two decades. Mainly regarding industrial groups with the highest R&D investments and their consolidated subsidiaries.
+The aim of **CIB** is to facilitate a dataset for the analysis on the transformation of global patent portfolios in the last two decades for industrial groups with the highest R&D investments and for their conrrespondent consolidate subsidiaries as well.
 
 ## How was it built
 
-- Extraction of data from orbis database.
-- Creating RPD database.
-- Matching of entities using PAM System.
-- Database Modeling and enrichment of geographical information.
-- Conclusions
+1. [About the RPD and ORBIS databases](#about-rpd-database) - A brief description about the two data sources used for generating CIB 
+2. [Overview diagram](#overview-diagram) - Simple diagram describing the steps taken for building CIB
+3. [Extraction of data from orbis](#extraction-of-orbis-data) - Criterias and methods for extracting orbis guo and subsidiaries
+4. [Matching entities using PAM System](#matching-entities-using-pam-system) - Description of the followed process in order to link entities
+5. [Database Modeling](#database-modeling) - The relational database design used for CIB database
+6. [Funding](#funding) - Banner with the funding organizations
 
-## Extraction of The ORBIS data
+## About the RPD and ORBIS databases
+
+## Overview diagram
+
+### ORBIS 
 
 **ORBIS** has information on over 280 million companies across the globe. It’s the resource for company data. And it makes simple to compare companies internationally. Orbis is mostly used to find, analyse and compare companies for better decision making and increased efficiency.
 
-For CIB was only taken in account the  the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
+### Risis patent database (RPD)
+
+**RPD** is a patent database that has been set up using the European Patent Office (EPO) Worldwide Patent Statistical Database, henceforth PATSTAT developed by the EuropeanPatent Office. The conceptual model of the database offers the ability to manipulate relations between more than 30 tables. Each table contains a set of variables that enable studying several analytical dimensions: contents (title, abstract...), knowledge dynamics (bibliographical links for science and technology, fine grained description of the technological fields...), organizations (intellectual property through applicant names), geography (localization of the inventions and collaborations)...
+
+But **RPD** is as well an augmented version of the generic PATSTAT database in the sense that it includes a series of enrichment thanks to the filling of information missing in the initial PATSTAT database (e.g: addresses), the harmonisation of raw information from the initial PATSTAT database (e.g: country information) and the addition of new information (e.g: technological classification).
+
+There are two repositories that incluedes the process for 
+
+## Extraction of data from ORBIS
+
+For creating **CIB** was only taken in account the  the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
 
 
-#### Criteria 2
+#### Criteria for selecting subsidiaries
 
-Still with a remaining good amount of the subsidiaries without being analyzed, was used the fields subs_total and subs_direct to determine the rest of consolidated subsidiaries. In ORBIS, "subs_directs" is the "Percentage Owned Direct" where a consolidate entity is represented by the "WO" (wholly owned) code or "MO" (majority owned) code, these symbolize 100% and >50.1% of ownership respectively. Subs_total is the "Percentage Owned Total", this variable is a combination of numbers and string representations such as '>75.00'. Thus the following script extracts all these cases and create a new table with the final filter. (The list of subs_direct values was obtained by doing a `distinct` selection over the field)  
+
+## Matching entities using PAM System 
+
+
+## Database Modeling
+
+## Funding 
