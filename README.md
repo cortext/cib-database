@@ -21,23 +21,19 @@ The aim of **CIB** is to facilitate a dataset for the analysis on the transforma
 
 ### ORBIS 
 
-**ORBIS** has information on over 280 million companies across the globe. It’s the resource for company data. And it makes simple to compare companies internationally. Orbis is mostly used to find, analyse and compare companies for better decision making and increased efficiency.
+**ORBIS** has information on over 280 million companies across the globe. It’s the biggest resource for company data making simple to compare companies internationally. Orbis is mostly used to find, analyse and compare companies for better decision making and increased efficiency.
 
 ### Risis patent database (RPD)
 
-**RPD** is a patent database that has been set up using the European Patent Office (EPO) Worldwide Patent Statistical Database, henceforth PATSTAT developed by the EuropeanPatent Office. The conceptual model of the database offers the ability to manipulate relations between more than 30 tables. Each table contains a set of variables that enable studying several analytical dimensions: contents (title, abstract...), knowledge dynamics (bibliographical links for science and technology, fine grained description of the technological fields...), organizations (intellectual property through applicant names), geography (localization of the inventions and collaborations)...
+**RPD** is a patent database that has been set up using the European Patent Office (EPO) Worldwide Patent Statistical Database, henceforth PATSTAT developed by the EuropeanPatent Office. The conceptual model of the database offers the ability to manipulate relations between more than 30 tables. Each table contains a set of variables that enable studying several analytical dimensions: contents (title, abstract...), knowledge dynamics (bibliographical links for science and technology, fine grained description of the technological fields...), organizations (intellectual property through applicant names), geography (localization of the inventions and collaborations).
 
 But **RPD** is as well an augmented version of the generic PATSTAT database in the sense that it includes a series of enrichment thanks to the filling of information missing in the initial PATSTAT database (e.g: addresses), the harmonisation of raw information from the initial PATSTAT database (e.g: country information) and the addition of new information (e.g: technological classification).
 
-There are two repositories that incluedes the process for 
+There are two repositories that includes the process for 
 
 ## Extraction of data from ORBIS
 
-For creating **CIB** was only taken in account the  the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
-
-
-#### Criteria for selecting subsidiaries
-
+For creating **CIB** was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
 
 ## Matching entities using PAM System 
 
