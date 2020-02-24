@@ -4,7 +4,8 @@
     Cortext platform. The db should contains the geographical results.
 */
 
-SELECT address,
+SELECT B.data AS guo_orbis_id,
+	   address,
        label,
        longitude,
        latitude,
@@ -13,14 +14,16 @@ SELECT address,
        region,
        country,
        iso3,
-	   substr(B.data, 1, 10) AS nuts_id,
-	   substr(B.data, 12, 10) AS nuts_source,
-       C.data AS rurban_area_id,
-	   D.data AS rurban_area_name
+	   substr(C.data, 1, 10) AS nuts_id,
+	   substr(C.data, 12, 10) AS nuts_source,
+       D.data AS rurban_area_id,
+	   E.data AS rurban_area_name
 FROM   geo_address A
-	   LEFT JOIN map_id_NUTS B
+	   LEFT JOIN guo_orbis_id B
 			  ON A.id = B.id
-       LEFT JOIN map_id_urban_areas C
-              ON A.id = C.id
-	   LEFT JOIN map_urban_areas D
-              ON A.id = D.id;  
+	   LEFT JOIN map_id_NUTS C
+			  ON A.id = C.id
+       LEFT JOIN map_id_urban_areas D
+              ON A.id = D.id
+	   LEFT JOIN map_urban_areas E
+              ON A.id = E.id; 
