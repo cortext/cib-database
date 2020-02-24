@@ -1,0 +1,10 @@
+address,label,longitude,latitude,confidence,city,region,country,iso3,nuts_id,nuts_source,rurban_area_id,rurban_area_name
+"BINGER STR. 173, 55218, INGELHEIM, DE","Ingelheim am Rhein, Germany",8.055959,49.972939,1.00,Ingelheim am Rhein,Rheinland-Pfalz,Germany,DEU,nuts3-2016,DEB3J,luisa2014fua DE037L1,Mainz DE
+"SUITE 500, 201, ISABELLA STREET, 15212, PITTSBURGH, US","15212, Pittsburgh, USA",-79.990054,40.456946,1.00,Pittsburgh,Pennsylvania,United States,USA,,,uscensus2017urbanarea 69697,Pittsburgh US
+"P.O. BOX 1655, ECONOMIC ANDTECHNOLOGICAL DEVELOPMENT ZONE, BUILDING 2, 8TH FLOOR, 5A, RONGCHANG EAST STREET, 100 712, BEIJING, CN","Beijing, China",116.417592,39.937967,1.00,Beijing,Beijing,China,CHN,,,beijingcitylab2012densitypop 5035,Beijing CN
+"2929, WALNUT STREET, 19104, PHILADELPHIA, US","19104, Philadelphia, USA",-75.198856,39.958518,1.00,Philadelphia,Pennsylvania,United States,USA,,,uscensus2017urbanarea 69076,Philadelphia US
+"5, A SHUGUANG XILI, SANYUANQIAO, 100 028, BEIJING, CN","Beijing, China",116.417592,39.937967,1.00,Beijing,Beijing,China,CHN,,,beijingcitylab2012densitypop 5035,Beijing CN
+"SHINAGAWA INTERCITY A BUILDING, 15-15, KONAN 2-CHOME, MINATO-KU, 108-6020, TOKYO, JP","Tokyo, Japan",139.75391,35.695126,0.60,Tokyo,Tokyo Prefecture,Japan,JPN,,,oecd2016fua JP030,Tokyo JP
+"ORIONINTIE 1A, 02200, ESPOO, FI","Espoo, Finland",24.65104,60.20956,1.00,Espoo,Uusimaa,Finland,FIN,nuts3-2016,FI1B1,luisa2014fua FI001L2,Helsinki FI
+"BUILDING 20, 8TH - 9TH FLOOR, 5A, SHUGUANGXILI, 100 028, BEIJING, CN","Beijing, China",116.417592,39.937967,1.00,Beijing,Beijing,China,CHN,,,beijingcitylab2012densitypop 5035,Beijing CN
+"BOX 39, 147 21, TUMBA, SE","Tumba, Sweden",17.825334,59.193221,1.00,Tumba,Stockholm,Sweden,SWE,nuts3-2016,SE110,luisa2014fua SE001L1,Stockholm SE

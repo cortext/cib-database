@@ -47,7 +47,7 @@ CREATE TABLE pam_results_guo
      query_type               VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1; 
+DEFAULT charset=utf8; 
 
 
 CREATE TABLE pam_results_subsidiaries
@@ -70,7 +70,7 @@ CREATE TABLE pam_results_subsidiaries
      guo_name                 VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1; 
+DEFAULT charset=utf8; 
 
 
 /* TABLES REQUIRES FOR LOADING AND PROCESS THE DATA EXTRACTED FROM ORBIS  */
@@ -89,7 +89,7 @@ CREATE TABLE cib_firms
      last_year_account_available VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1; 
+DEFAULT charset=utf8; 
 
 
 CREATE TABLE cib_firm_names
@@ -100,7 +100,7 @@ CREATE TABLE cib_firm_names
      aka_name           VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1;
+DEFAULT charset=utf8;
 
 
 CREATE TABLE cib_firm_sector
@@ -112,7 +112,7 @@ CREATE TABLE cib_firm_sector
      nace2_secondary_label VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1; 
+DEFAULT charset=utf8; 
 
 
 CREATE TABLE cib_firm_financial_data
@@ -127,7 +127,7 @@ CREATE TABLE cib_firm_financial_data
      roa_using_pl_before_taxes VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1;
+DEFAULT charset=utf8;
 
 
 CREATE TABLE cib_firm_financial_data_cluttered
@@ -154,7 +154,7 @@ CREATE TABLE cib_firm_financial_data_cluttered
      roa_using_pl_before_taxes_two_years_previous_last_year VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1; 
+DEFAULT charset=utf8; 
 
 
 CREATE TABLE orbis_firm_address
@@ -177,7 +177,13 @@ CREATE TABLE orbis_firm_address
      county              VARCHAR(255) NULL
   )
 engine=myisam
-DEFAULT charset=latin1; 
+DEFAULT charset=utf8; 
 
   
-
+CREATE TABLE prepare_address_to_geocode
+  (
+     guo_orbis_id VARCHAR(255) NULL,
+     address      TEXT CHARACTER SET utf8
+  )
+engine=myisam
+DEFAULT charset=utf8; 
