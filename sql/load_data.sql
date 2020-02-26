@@ -1,4 +1,7 @@
--- LOAD GUO FROM ACCURATE FILE 
+
+/* LOAD MATCHING RESULTS FROM PAM SYSTEM */
+
+-- Load guo from accurate file 
 
 LOAD DATA LOCAL INFILE '../data/subs_accurate_matching_check.csv' 
 INTO TABLE pam_results_subsidiaries 
@@ -7,7 +10,7 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
 
--- LOAD GUO FROM TO_CHECK FILE 
+-- Load guo from to_check
 
 LOAD DATA LOCAL INFILE '../data/subs_to_checks_matching_check.csv' 
 INTO TABLE pam_results_subsidiaries 
@@ -16,14 +19,35 @@ FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
 
+-- Load subsidiaries from accurate file 
 
-LOAD data local INFILE '../data/Export 31_01_2020 18_05_9 firms_names_CIB2.csv'
-INTO TABLE `cib_firm_names` fields TERMINATED BY ','
+LOAD DATA LOCAL INFILE '../data/subs_accurate_matching_check.csv' 
+INTO TABLE pam_results_subsidiaries 
+CHARACTER SET UTF8 
+FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
 
+-- Load subsidiaries from to_check
+
+LOAD DATA LOCAL INFILE '../data/subs_to_checks_matching_check.csv' 
+INTO TABLE pam_results_subsidiaries 
+CHARACTER SET UTF8 
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+IGNORE 1 LINES;
+
+/* ================================================ */
+
+/* LOAD FINANCIAL DATA FROM ORBIS */
+
 LOAD DATA LOCAL INFILE '../data/Export 31_01_2020_9_firms_sdd_view.csv' 
 INTO TABLE `cib_firms` FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+IGNORE 1 LINES;
+
+LOAD data local INFILE '../data/Export 31_01_2020 18_05_9 firms_names_CIB2.csv'
+INTO TABLE `cib_firm_names` fields TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
 
@@ -41,3 +65,6 @@ LOAD DATA LOCAL INFILE '../data/Export 31_01_2020 17_22_9_firms_address.csv'
 INTO TABLE `orbis_firm_address` FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
+
+/* ================================================ */
+

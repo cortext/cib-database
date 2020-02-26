@@ -1,29 +1,18 @@
+/* ================ Cleaning firm sector table ================ */
 
-/* 
-    This script has to be run into the sqlite db which can be downloaded from
-    Cortext platform. The db should contains the geographical results.
-*/
+SET @table_name = 'cib_firm_sector';
+CALL normalize_null(@table_name, 'nace2_primary_code');
+CALL normalize_null(@table_name, 'nace2_primary_label');
+CALL normalize_null(@table_name, 'nace2_secondary_label');
+CALL normalize_null(@table_name, 'nace2_secondary_label');
+CALL normalize_null(@table_name, 'nace2_secondary_label');
 
-SELECT B.data AS guo_orbis_id,
-	   address,
-       label,
-       longitude,
-       latitude,
-       confidence,
-       city,
-       region,
-       country,
-       iso3,
-	   substr(C.data, 1, 10) AS nuts_id,
-	   substr(C.data, 12, 10) AS nuts_source,
-       D.data AS rurban_area_id,
-	   E.data AS rurban_area_name
-FROM   geo_address A
-	   LEFT JOIN guo_orbis_id B
-			  ON A.id = B.id
-	   LEFT JOIN map_id_NUTS C
-			  ON A.id = C.id
-       LEFT JOIN map_id_urban_areas D
-              ON A.id = D.id
-	   LEFT JOIN map_urban_areas E
-              ON A.id = E.id; 
+/* ================ Cleaning financial table ================ */
+
+SET @table_name = 'cib_firm_sector';
+CALL normalize_null(@table_name, 'operating_revenue');
+CALL normalize_null(@table_name, 'total_assests');
+CALL normalize_null(@table_name, 'number_employees');
+CALL normalize_null(@table_name, 'pl_before_taxes');
+CALL normalize_null(@table_name, 'roe_using_pl_before_taxes')
+CALL normalize_null(@table_name, 'roa_using_pl_before_taxes');
