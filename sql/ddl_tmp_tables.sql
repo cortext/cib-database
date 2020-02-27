@@ -13,11 +13,11 @@
 /*                                                                            */
 /*          pam_results_guo                                                   */
 /*          pam_results_subsidiaries                                          */
-/*          cib_firm                                                          */
-/*          cib_firm_names                                                    */
-/*          cib_firm_sector                                                   */
-/*          cib_firm_financial_data                                           */
-/*          cib_firm_financial_data_cluttered                                 */
+/*          tmp_cib_firm                                                      */
+/*          tmp_cib_firm_names                                                */
+/*          tmp_cib_firm_sector                                               */
+/*          tmp_cib_firm_financial_data                                       */
+/*          tmp_cib_firm_financial_data_cluttered                             */
 /*          orbis_firm_address                                                */
 /*                                                                            */
 /*                                                                            */
@@ -75,7 +75,7 @@ DEFAULT charset=utf8;
 
 /* TABLES REQUIRES FOR LOADING AND PROCESS THE DATA EXTRACTED FROM ORBIS  */
 
-CREATE TABLE cib_firms
+CREATE TABLE tmp_cib_firms
   (
      guo_orbis_id                VARCHAR(255) NULL,
      name                        VARCHAR(255) NULL,
@@ -92,7 +92,7 @@ engine=myisam
 DEFAULT charset=utf8; 
 
 
-CREATE TABLE cib_firm_names
+CREATE TABLE tmp_cib_firm_names
   (
      guo_orbis_id       VARCHAR(255) NULL,
      previous_name      VARCHAR(255) NULL,
@@ -103,7 +103,7 @@ engine=myisam
 DEFAULT charset=utf8;
 
 
-CREATE TABLE cib_firm_sector
+CREATE TABLE tmp_cib_firm_sector
   (
      guo_orbis_id          VARCHAR(255) NULL,
      nace2_primary_code    VARCHAR(255) NULL,
@@ -115,7 +115,7 @@ engine=myisam
 DEFAULT charset=utf8; 
 
 
-CREATE TABLE cib_firm_financial_data
+CREATE TABLE tmp_cib_firm_financial_data
   (
      guo_orbis_id              VARCHAR(255) NULL,
      `year`                    VARCHAR(255) NULL,
@@ -130,7 +130,7 @@ engine=myisam
 DEFAULT charset=utf8;
 
 
-CREATE TABLE cib_firm_financial_data_cluttered
+CREATE TABLE tmp_cib_firm_financial_data_cluttered
   (
      guo_orbis_id                                           VARCHAR(255) NULL,
      `last_year`                                            VARCHAR(255) NULL,

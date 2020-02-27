@@ -9,7 +9,7 @@ CALL normalize_null(@table_name, 'nace2_secondary_label');
 
 /* ================ Cleaning financial table ================ */
 
-SET @table_name = 'cib_firm_sector';
+SET @table_name = 'cib_firm_financial_data';
 CALL normalize_null(@table_name, 'operating_revenue');
 CALL normalize_null(@table_name, 'total_assests');
 CALL normalize_null(@table_name, 'number_employees');
