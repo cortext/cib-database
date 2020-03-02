@@ -1,4 +1,4 @@
-CREATE PROCEDURE unit_test(IN tables_type char(50),
+CREATE DEFINER=`gnupablo`@`%` PROCEDURE `CIB_2020_v2_lab`.`unit_test`(IN tables_type char(50),
 IN minimum_absolute_tolerance float)
 BEGIN
 	
@@ -33,8 +33,8 @@ IF tables_type = 'cib_firm' THEN
              IF(e.columns_md5 = f.columns_md5 ,'ok','not ok') AS columns_match,
              IF(e.data_types_md5 = f.data_types_md5 ,'ok','not ok') AS data_type_match,
              IF(e.indexes_md5 = f.indexes_md5 ,'ok','not ok') AS indexes_match,
-             IF(e.recs > @count_firms * (e.percentage_records - @mabt) 
-                AND e.recs < @count_firms * (e.percentage_records + @mabt),'ok','not ok') 
+             IF(e.recs > @count_firms * (e.proportional_size - @mabt) 
+                AND e.recs < @count_firms * (e.proportional_size + @mabt),'ok','not ok') 
                 AS consistency
   FROM       expected_values e
   INNER JOIN found_values f
@@ -53,8 +53,8 @@ ELSEIF
              IF(e.columns_md5 = f.columns_md5 ,'ok','not ok') AS columns_match,
              IF(e.data_types_md5 = f.data_types_md5 ,'ok','not ok') AS data_type_match,
              IF(e.indexes_md5 = f.indexes_md5 ,'ok','not ok') AS indexes_match,
-             IF(e.recs > @count_patents * (e.percentage_records - @mabt) 
-                AND e.recs < @count_patents * (e.percentage_records + @mabt),'ok','not ok')
+             IF(e.recs > @count_patents * (e.proportional_size - @mabt) 
+                AND e.recs < @count_patents * (e.proportional_size + @mabt),'ok','not ok')
                 AS consistency
   FROM       expected_values e
   INNER JOIN found_values f
