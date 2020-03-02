@@ -33,13 +33,24 @@
 
 |table_name|records_exact_match|columns_match|data_type_match|indexes_match|consistency|
 |----------|-------------------|-------------|---------------|-------------|-----------|
-|cib_firm_address|not ok|ok|ok|ok|ok|
-|cib_firm_financial_data|not ok|ok|ok|ok|ok|
-|cib_firm_names|not ok|ok|ok|ok|ok|
-|cib_firm_sector|not ok|ok|ok|ok|ok|
-|cib_firms|not ok|ok|ok|ok|ok|
+|cib_firm_address|ok|ok|ok|ok|ok|
+|cib_firm_financial_data|ok|ok|ok|ok|ok|
+|cib_firm_names|ok|ok|ok|ok|ok|
+|cib_firm_sector|ok|ok|ok|ok|ok|
+|cib_firms|ok|ok|ok|ok|ok|
 |cib_patents_inventors|not ok|ok|ok|ok|ok|
-|cib_patents_priority_attributes|not ok|ok|ok|ok|ok|
-|cib_patents_technological_classification|not ok|ok|ok|ok|ok|
-|cib_patents_textual_information|not ok|ok|ok|ok|ok|
-|cib_patents_value|not ok|ok|ok|ok|ok|    
+|cib_patents_priority_attributes|ok|ok|ok|ok|ok|
+|cib_patents_technological_classification|ok|ok|ok|ok|ok|
+|cib_patents_textual_information|ok|ok|ok|ok|ok|
+|cib_patents_value|ok|ok|ok|ok|ok|
+
+---
+### Summary
+
+|summary|result|
+|-------|------|
+|records_count|fail|
+|columns|ok|
+|data_types|ok|
+|indexes|ok|
+|consistency|ok|
