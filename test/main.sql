@@ -91,23 +91,33 @@ CALL unit_test(@schema_name , 'cib_patents_technological_classification');
 CALL unit_test(@schema_name , 'cib_patents_textual_information');
 CALL unit_test(@schema_name , 'cib_patents_value');
 
-
 SELECT table_name,
        recs        AS 'found_records   ',
        columns_md5 AS found_columns
 FROM   found_values;
 
-SELECT e.table_name,
-       IF(e.recs = f.recs, 'OK', 'not ok')               AS records_match,
-       IF(e.columns_md5 = f.columns_md5, 'ok', 'not ok') AS columns_match
-FROM   expected_values e
-       INNER JOIN found_values f USING (table_name);
+/* FUNCTION THAT CREATE THE UNIT TEST TABLE */
 
-SET @columns=(SELECT count(*) FROM expected_values e INNER JOIN found_values f
-ON (e.table_name=f.table_name) WHERE f.columns_md5 != e.columns_md5);
+CALL check_tables('cib_firm'); 
+CALL check_tables('cib_patent');
+SELECT * FROM unit_test_results;
 
-SET @count_fail=(SELECT count(*) FROM expected_values e INNER JOIN found_values
-f ON (e.table_name=f.table_name) WHERE f.recs != e.recs);
+/* ======================================= */
+
+SET @records_count=(SELECT count(*) FROM unit_test_results WHERE
+records_exact_match = 'not ok');
+
+SET @columns_match=(SELECT count(*) FROM unit_test_results WHERE columns_match =
+'not ok');
+
+SET @data_types=(SELECT count(*) FROM unit_test_results WHERE data_type_match =
+'not ok');
+
+SET @indexes=(SELECT count(*) FROM unit_test_results WHERE indexes_match =
+'not ok');
+
+SET @consistency=(SELECT count(*) FROM unit_test_results WHERE consistency =
+'not ok');
 
 SELECT Timediff(Now(), (SELECT create_time
                         FROM   information_schema.tables
@@ -117,8 +127,17 @@ SELECT Timediff(Now(), (SELECT create_time
 
 DROP TABLE expected_values, found_values;
 
-SELECT 'columns'                      AS summary,
-       IF(@columns = 0, "ok", "fail") AS 'result'
+SELECT 'records_count'                      AS summary,
+       IF(@records_count = 0, "ok", "fail") AS 'result'
 UNION ALL
-SELECT 'count',
-       IF(@count_fail = 0, "ok", "fail"); 
+SELECT 'columns',
+       IF(@columns_match = 0, "ok", "fail")
+UNION ALL
+SELECT 'data_types' AS summary,
+       IF(@data_types = 0, "ok", "fail")
+UNION ALL
+SELECT 'indexes',
+       IF(@indexes = 0, "ok", "fail")
+UNION ALL
+SELECT 'consistency',
+       IF(@consistency = 0, "ok", "fail"); 
