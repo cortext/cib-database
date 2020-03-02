@@ -1,4 +1,4 @@
-CREATE PROCEDURE unit_test(
+CREATE PROCEDURE create_found_values(
 IN schema_name_cib VARCHAR(255),
 IN table_name_cib VARCHAR(255))
 BEGIN

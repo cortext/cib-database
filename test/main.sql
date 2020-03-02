@@ -79,17 +79,17 @@ CREATE TABLE tchecksum (chk char(100)) ENGINE=blackhole;
 SET @schema_name = 'CIB_2020_v2_lab';
 
 
-CALL unit_test(@schema_name , 'cib_firm_address'); 
-CALL unit_test(@schema_name , 'cib_firm_financial_data'); 
-CALL unit_test(@schema_name , 'cib_firm_names'); 
-CALL unit_test(@schema_name , 'cib_firm_sector'); 
-CALL unit_test(@schema_name , 'cib_firms'); 
-CALL unit_test(@schema_name , 'cib_patents_actors'); 
-CALL unit_test(@schema_name , 'cib_patents_inventors'); 
-CALL unit_test(@schema_name , 'cib_patents_priority_attributes'); 
-CALL unit_test(@schema_name , 'cib_patents_technological_classification');
-CALL unit_test(@schema_name , 'cib_patents_textual_information');
-CALL unit_test(@schema_name , 'cib_patents_value');
+CALL create_found_values(@schema_name , 'cib_firm_address'); 
+CALL create_found_values(@schema_name , 'cib_firm_financial_data'); 
+CALL create_found_values(@schema_name , 'cib_firm_names'); 
+CALL create_found_values(@schema_name , 'cib_firm_sector'); 
+CALL create_found_values(@schema_name , 'cib_firms'); 
+CALL create_found_values(@schema_name , 'cib_patents_actors'); 
+CALL create_found_values(@schema_name , 'cib_patents_inventors'); 
+CALL create_found_values(@schema_name , 'cib_patents_priority_attributes'); 
+CALL create_found_values(@schema_name , 'cib_patents_technological_classification');
+CALL create_found_values(@schema_name , 'cib_patents_textual_information');
+CALL create_found_values(@schema_name , 'cib_patents_value');
 
 SELECT table_name,
        recs        AS 'found_records   ',
@@ -98,8 +98,8 @@ FROM   found_values;
 
 /* FUNCTION THAT CREATE THE UNIT TEST TABLE */
 
-CALL check_tables('cib_firm'); 
-CALL check_tables('cib_patent');
+CALL unit_test('cib_firm'); 
+CALL unit_test('cib_patent');
 SELECT * FROM unit_test_results;
 
 /* ======================================= */
