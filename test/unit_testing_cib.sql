@@ -1,87 +1,124 @@
-/* ============ UNIT TESTING ================ */
+DROP TABLE IF EXISTS expected_values, found_values, tchecksum;
+CREATE TABLE expected_values (
+    table_name varchar(50) not null primary key,
+    recs int not null,
+    columns_md5 varchar(100) not null,
+    indexes_md5 varchar(100) not null,
+    data_types_md5 varchar(100) not null
+) ENGINE=MyISAM;
 
-USE corporate_invention_board;
+CREATE TABLE found_values LIKE expected_values;
 
-SELECT 'TESTING INSTALLATION' as 'INFO';
+INSERT
+	INTO
+	expected_values (table_name,
+	recs,
+	columns_md5,
+	indexes_md5,
+	data_types_md5)
+VALUES ('cib_firm_address',
+4001,
+'8ea78565413f1a67f2d15b25057f4121',
+'b780b3cdf7af019d6ded12f1e26be708',
+'e252275835dabd23d355b646e4f59545') ,
+('cib_firm_financial_data',
+11271,
+'1315f35d7c8dbb7629183b6843070fd3',
+'ad2b188f33daec91db650c77a74bb07d',
+'e252275835dabd23d355b646e4f59545') ,
+('cib_firm_names',
+7234,
+'68cbcfd62f2d20788435c77789e6939e',
+'47acfe4164232128fb9fcacc6661426a',
+'e252275835dabd23d355b646e4f59545') ,
+('cib_firm_sector',
+3992,
+'03f20591fdce1cbd48df67d53b092805',
+'62fea4099b6fdac6c565763adb8aece4',
+'e252275835dabd23d355b646e4f59545') ,
+('cib_firms',
+3992,
+'ca0e84618b5f9a615b5b09b2fdf232f9',
+'5195709aa091ff80c92d64e14857158b',
+'0f8e66026c1a947967e1cc9fa9f58b8c') ,
+('cib_patents_actors',
+6377887,
+'658c879ffb4f3c340dd9e3392f8c3aeb',
+'a65a79a1d1c81e98a1b9cb74afe51b7f',
+'ae961e2ecf7b6697b3b7017b2d0aac27') ,
+('cib_patents_inventors',
+15792193,
+'143eb3f337a46ecf6360158b82ccd526',
+'e8171b46af83b62d6508d170c949f19a',
+'e6a95f5461b715256d09987643e0cbb8') ,
+('cib_patents_priority_attributes',
+6179588,
+'83686f6d931c5f4bf8d6f9bacb648cd9',
+'ff917ddc69fd216f2037b9f1b85f4f60',
+'46771313e0ca9e407fd08aacc1527d9a') ,
+('cib_patents_technological_classification',
+18237980,
+'f8204c5158b4af26fa9da20b5906c696',
+'b89743327bfc09b30444ad1fc5df9cb8',
+'a1d302a4c2f8c7d62f296ffbc01b31e2') ,
+('cib_patents_textual_information',
+6179588,
+'f650195dd258f5e55f30c25d81148bf4',
+'3e40b2438346c17a5387310d14157d75',
+'46771313e0ca9e407fd08aacc1527d9a') ,
+('cib_patents_value',
+6179588,
+'851da38865ff8a8716aae1220d8193eb',
+'7d50aaaa76a705e2b28de5e49d009d38',
+'3ae829ee705d7ba61f487ea1fdd874a3');
 
-SET @schema_name = 'corporate_invention_board';
 
-/* ============ CRC FIRMS TABLES ================ */
-SET @table_firm_address = 'cib_firm_address';
+CREATE TABLE tchecksum (chk char(100)) ENGINE=blackhole;
 
-SET @table_firm_financial = 'cib_firm_financial';
+-- SET @schema_name = 'corporate_invention_board_v2.0.1';
+SET @schema_name = 'CIB_2020_v2_lab';
 
-SET @table_firm_names = 'cib_firm_names';
 
-SET @table_firm_sector = 'cib_firm_sector';
+CALL unit_test(@schema_name , 'cib_firm_address'); 
+CALL unit_test(@schema_name , 'cib_firm_financial_data'); 
+CALL unit_test(@schema_name , 'cib_firm_names'); 
+CALL unit_test(@schema_name , 'cib_firm_sector'); 
+CALL unit_test(@schema_name , 'cib_firms'); 
+CALL unit_test(@schema_name , 'cib_patents_actors'); 
+CALL unit_test(@schema_name , 'cib_patents_inventors'); 
+CALL unit_test(@schema_name , 'cib_patents_priority_attributes'); 
+CALL unit_test(@schema_name , 'cib_patents_technological_classification');
+CALL unit_test(@schema_name , 'cib_patents_textual_information');
+CALL unit_test(@schema_name , 'cib_patents_value');
 
-SET @table_firms = 'cib_firms';
 
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_firm_address;
+SELECT table_name,
+       recs        AS 'found_records   ',
+       columns_md5 AS found_columns
+FROM   found_values;
 
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_firm_financial;
+SELECT e.table_name,
+       IF(e.recs = f.recs, 'OK', 'not ok')               AS records_match,
+       IF(e.columns_md5 = f.columns_md5, 'ok', 'not ok') AS columns_match
+FROM   expected_values e
+       INNER JOIN found_values f USING (table_name);
 
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_firm_names;
+SET @columns=(SELECT count(*) FROM expected_values e INNER JOIN found_values f
+ON (e.table_name=f.table_name) WHERE f.columns_md5 != e.columns_md5);
 
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_firm_sector;
+SET @count_fail=(SELECT count(*) FROM expected_values e INNER JOIN found_values
+f ON (e.table_name=f.table_name) WHERE f.recs != e.recs);
 
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_firms;
+SELECT Timediff(Now(), (SELECT create_time
+                        FROM   information_schema.tables
+                        WHERE  table_schema = @schema_name
+                               AND table_name = 'expected_values')) AS
+       computation_time;
 
-/* ============ CRC PATENT TABLES ================ */
+DROP TABLE expected_values, found_values;
 
-SET @table_patents_actors = 'cib_patents_actors';
-
-SET @table_patents_inventors = 'cib_patents_inventors';
-
-SET @table_patents_prior_attr = 'cib_patents_priority_attributes';
-
-SET @table_patents_tech_class = 'cib_patents_technological_classification';
-
-SET @table_patents_txt_info = 'cib_patents_textual_information';
-
-SET @table_patents_value = 'cib_patents_value';
-
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_patents_actors;
-
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_patents_inventors;
-
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_patents_prior_attr;
-
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_patents_tech_class;
-
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_patents_txt_info;
-
-SELECT Md5(Group_concat(column_name)) AS crc
-FROM   information_schema.columns
-WHERE  table_schema = @schema_name
-       AND table_name = @table_patents_value; 
+SELECT 'columns'                      AS summary,
+       IF(@columns = 0, "ok", "fail") AS 'result'
+UNION ALL
+SELECT 'count',
+       IF(@count_fail = 0, "ok", "fail"); 
