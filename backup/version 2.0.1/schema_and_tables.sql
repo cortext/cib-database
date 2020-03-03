@@ -240,3 +240,4 @@ CREATE TABLE `cib_patents_value`
                           KEY `cib_patents_value_ip5_idx` (`ip5`) USING btree
              )
              engine=myisam DEFAULT  charset=utf8 COLLATE=utf8_unicode_ci;
+ 

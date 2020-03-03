@@ -17,7 +17,7 @@
 /*          tmp_cib_firm_names                                                */
 /*          tmp_cib_firm_sector                                               */
 /*          tmp_cib_firm_financial_data                                       */
-/*          tmp_cib_firm_financial_data_cluttered                             */
+/*          tmp_cluttered_financial_data                                      */
 /*          tmp_orbis_firm_address                                            */
 /*          tmp_prepare_address_to_geocode                                    */
 /*                                                                            */
@@ -131,7 +131,7 @@ engine=myisam
 DEFAULT charset=utf8;
 
 
-CREATE TABLE tmp_cib_firm_financial_data_cluttered
+CREATE TABLE tmp_cluttered_financial_data
   (
      guo_orbis_id                                           VARCHAR(255) NULL,
      `last_year`                                            VARCHAR(255) NULL,
