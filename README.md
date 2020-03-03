@@ -40,4 +40,8 @@ For creating **CIB** was only taken in account the subsidiaries that are consoli
 
 ## Database Modeling
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/cortext/cib-database/master/docs/data%20model%20diagram.png">
+</p>
+
 ## Funding 
