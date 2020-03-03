@@ -45,3 +45,5 @@ For creating **CIB** was only taken in account the subsidiaries that are consoli
 </p>
 
 ## Funding 
+|<img src="https://www.risis2.eu/wp-content/themes/risis2-theme/images/logo-risis-2.png" alt="Risis logo" 	title="RISIS 2" width="500px" height="55px" />| <p>[The RISIS project](https://www.risis2.eu/)  aims at creating a distributed research infrastructure to support and  advance science and innovation studies. The project is funded by the  European Union under Horizon2020 Research and Innovation Programme Grant  Agreement n°82409.</p> |
+|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
