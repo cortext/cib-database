@@ -11,14 +11,15 @@
 /*                                                                            */
 /*     Name of tables :                                                       */
 /*                                                                            */
-/*          pam_results_guo                                                   */
-/*          pam_results_subsidiaries                                          */
+/*          tmp_pam_results_guo                                               */
+/*          tmp_pam_results_subsidiaries                                      */
 /*          tmp_cib_firm                                                      */
 /*          tmp_cib_firm_names                                                */
 /*          tmp_cib_firm_sector                                               */
 /*          tmp_cib_firm_financial_data                                       */
 /*          tmp_cib_firm_financial_data_cluttered                             */
-/*          orbis_firm_address                                                */
+/*          tmp_orbis_firm_address                                            */
+/*          tmp_prepare_address_to_geocode                                    */
 /*                                                                            */
 /*                                                                            */
 /*                                                                            */
@@ -29,7 +30,7 @@
 
 /* TABLES TO LOAD THE RESULTS OBTAINED BY THE MATCHING SYSTEM */
 
-CREATE TABLE pam_results_guo
+CREATE TABLE tmp_pam_results_guo
   (
      id                       VARCHAR(255) NULL,
      doc_std_name             VARCHAR(255) NULL,
@@ -50,7 +51,7 @@ engine=myisam
 DEFAULT charset=utf8; 
 
 
-CREATE TABLE pam_results_subsidiaries
+CREATE TABLE tmp_pam_results_subsidiaries
   (
      id                       VARCHAR(255) NULL,
      doc_std_name             VARCHAR(255) NULL,
@@ -157,7 +158,7 @@ engine=myisam
 DEFAULT charset=utf8; 
 
 
-CREATE TABLE orbis_firm_address
+CREATE TABLE tmp_orbis_firm_address
   (
      guo_orbis_id        VARCHAR(255) NULL,
      address_line1       VARCHAR(255) NULL,
@@ -180,7 +181,7 @@ engine=myisam
 DEFAULT charset=utf8; 
 
   
-CREATE TABLE prepare_address_to_geocode
+CREATE TABLE tmp_prepare_address_to_geocode
   (
      guo_orbis_id VARCHAR(255) NULL,
      address      TEXT CHARACTER SET utf8
