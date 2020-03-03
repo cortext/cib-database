@@ -212,7 +212,21 @@ CREATE TABLE `cib_patents_textual_infromation`
              )
              engine=myisam DEFAULT  charset=utf8 COLLATE=utf8_unicode_ci;
 
-             
+
+CREATE TABLE `cib_patents_technological_classification`
+             (
+                          `appln_id`         INT(10) NOT NULL DEFAULT '0',
+                          `ipc_class_symbol` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                          `frac_ipc`         DECIMAL(5,4) DEFAULT NULL,
+                          `domains`          VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+                          `fields`           VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+                          `subfields`        VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+                          `ipc_class_level`  VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                          PRIMARY KEY (`appln_id`,`ipc_class_symbol`),
+                          KEY `cib_patents_technological_classification_appln_id_idx` (`appln_id`) using btree
+             )
+             engine=myisam DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;       
+
              
 CREATE TABLE `cib_patents_value`
              (
