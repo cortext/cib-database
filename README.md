@@ -34,7 +34,7 @@ There are two repositories that includes the process for
 ## Overview diagram
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/cortext/cib-database/master/docs/overview%20diagram%20.png">
+<img src="https://raw.githubusercontent.com/cortext/cib-database/master/docs/overview%20diagram.png">
 </p>
 
 
