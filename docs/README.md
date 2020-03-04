@@ -17,6 +17,7 @@ The aim of **CIB** is to facilitate a dataset for the analysis on the transforma
 
 ## About the RPD and ORBIS databases
 
+## Overview diagram
 
 ### ORBIS 
 
@@ -30,29 +31,13 @@ But **RPD** is as well an augmented version of the generic PATSTAT database in t
 
 There are two repositories that includes the process for 
 
-
-## Overview diagram
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/cortext/cib-database/master/docs/overview%20diagram%20.png">
-</p>
-
-
 ## Extraction of data from ORBIS
 
 For creating **CIB** was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
-
 
 ## Matching entities using PAM System 
 
 
 ## Database Modeling
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/cortext/cib-database/master/docs/data%20model%20diagram.png">
-</p>
-
-
 ## Funding 
-|<img src="https://www.risis2.eu/wp-content/themes/risis2-theme/images/logo-risis-2.png" alt="Risis logo" 	title="RISIS 2" width="500px" height="55px" />| <p>[The RISIS project](https://www.risis2.eu/)  aims at creating a distributed research infrastructure to support and  advance science and innovation studies. The project is funded by the  European Union under Horizon2020 Research and Innovation Programme Grant  Agreement n°82409.</p> |
-|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
