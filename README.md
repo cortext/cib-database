@@ -10,7 +10,7 @@ The aim of **CIB** is to facilitate a dataset for the analysis on the transforma
 
 1. [About the RPD and ORBIS databases](#about-rpd-database) - A brief description about the two data sources used for generating CIB 
 2. [Overview diagram](#overview-diagram) - Simple diagram describing the steps taken for building CIB
-3. [Extraction of data from orbis](#extraction-of-orbis-data) - Criterias and methods for extracting orbis guo and subsidiaries
+3. [Extraction of data from orbis](#extraction-of-data-from-orbis) - Criterias and methods for extracting orbis guo and subsidiaries
 4. [Matching entities using PAM System](#matching-entities-using-pam-system) - Description of the followed process in order to link entities
 5. [Database Modeling](#database-modeling) - The relational database design used for CIB database
 6. [Funding](#funding) - Banner with the funding organizations
