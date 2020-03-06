@@ -1,43 +1,274 @@
-# The Corporate Invention Board Database (CIB)
+# TABLES DESCRIPTION 
 
-The CIB (Corporate Invention Board) dataset is a database characterising the patent portfolios of the largest industrial firms worldwide. The CIB combines information extracted from the Industrial R&D Investment Scoreboard (EU Commission), the ORBIS financial database and the RISIS Patent database ( enriched version of the Patstat EPO database).
+## cib_patents_actor
 
-## Why CIB Database
+### Description: 
 
-The aim of **CIB** is to facilitate a dataset for the analysis on the transformation of global patent portfolios in the last two decades for industrial groups with the highest R&D investments and for their conrrespondent consolidate subsidiaries as well.
+This table contains the key data from the applicants of a patent and also is the table that has the linkage between firms and applicants. It has some information such as: perso_name, doc_std_name, firmreg_id etc.
 
-## How was it built
-
-1. [About the RPD and ORBIS databases](#about-rpd-database) - A brief description about the two data sources used for generating CIB 
-2. [Overview diagram](#overview-diagram) - Simple diagram describing the steps taken for building CIB
-3. [Extraction of data from orbis](#extraction-of-orbis-data) - Criterias and methods for extracting orbis guo and subsidiaries
-4. [Matching entities using PAM System](#matching-entities-using-pam-system) - Description of the followed process in order to link entities
-5. [Database Modeling](#database-modeling) - The relational database design used for CIB database
-6. [Funding](#funding) - Banner with the funding organizations
-
-## About the RPD and ORBIS databases
-
-## Overview diagram
-
-### ORBIS 
-
-**ORBIS** has information on over 280 million companies across the globe. It’s the biggest resource for company data making simple to compare companies internationally. Orbis is mostly used to find, analyse and compare companies for better decision making and increased efficiency.
-
-### Risis patent database (RPD)
-
-**RPD** is a patent database that has been set up using the European Patent Office (EPO) Worldwide Patent Statistical Database, henceforth PATSTAT developed by the EuropeanPatent Office. The conceptual model of the database offers the ability to manipulate relations between more than 30 tables. Each table contains a set of variables that enable studying several analytical dimensions: contents (title, abstract...), knowledge dynamics (bibliographical links for science and technology, fine grained description of the technological fields...), organizations (intellectual property through applicant names), geography (localization of the inventions and collaborations).
-
-But **RPD** is as well an augmented version of the generic PATSTAT database in the sense that it includes a series of enrichment thanks to the filling of information missing in the initial PATSTAT database (e.g: addresses), the harmonisation of raw information from the initial PATSTAT database (e.g: country information) and the addition of new information (e.g: technological classification).
-
-There are two repositories that includes the process for 
-
-## Extraction of data from ORBIS
-
-For creating **CIB** was only taken in account the subsidiaries that are consolidated, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
-
-## Matching entities using PAM System 
+### Columns: 
 
 
-## Database Modeling
+| Column Name                 	| Description 	|
+|-----------------------------	|-------------	|
+| appln_id                	    | Application unique identifier          	|
+| firmreg_id                	|    Firm unique identifier         	|
+| person_name                 	|             	|
+| doc_std_name                	|   Standard  name  attributed  to  applicant  and  inventor names for inclusion in DOCDB. It  is  not  100%  certain  that  the  DOCDB  standardised names are always linked with the correct person name, in particular  if  the  person  information  came  from  a  source other  than  DOCDB.           	|
+| doc_std_name_id             	|   ID for the DOCDB standardized name          	|
+| psn_id                      	|   ID for the PATSTAT standardized name       	|
+| psn_name                    	|   PATSTAT standardized nameThe  attribute  is  populated  for  all  persons.  Names  of persons which have not beenharmonized are just copied from the attribute PERSON_NAME          	|
+| psn_sector                  	|     Sector of the applicantINDIVIDUAL    ;    COMPANY    ;    UNKNOWN    ; GOVERNMENT   ;   NON-PROFIT   ;   UNIVERSITY   ; HOSPITAL        	|
+| adr_final                   	|      Addresses of applicants       	|
+| name_final                  	|      Name enriched by RPD       	|
+| continent_final             	|             	|
+| iso_ctry                    	|     Iso ctry of the applicants        	|
+| latitude                    	|    Latitude generated by cortext gecoding         	|
+| longitude                   	|   Longitude generated by cortext gecoding          	|
+| confidence                  	|    Level of confidence of the result obtained by cortext geocoding         	|
+| iso3                        	|    Iso country code          	|
+| rurban_area_id              	|             	|
+| rurban_area_name            	|             	|
+| rurban_area_characteristics 	|             	|
+| nuts_source                 	|             	|
+| nuts_id                     	|             	|
+| frac_actor                  	|             	|                   
 
-## Funding 
+---
+
+## cib_patents_inventor
+
+### Description: 
+
+This table contains the key data from the inventors of a patent. It has some information such as: perso_name, doc_std_name, firmgreg_id etc.
+
+### Columns: 
+
+| Column Name                 	| Description 	|
+|-----------------------------	|-------------	|
+| appln_id                    	| Application unique identifier            	|
+| person_id                   	| Person identification            	|
+| adr_final                     	| Addresses of inventor            	|
+| person_name                 	|  Inventor's name          	|
+| continent_final             	|             	|
+| iso_ctry                    	|             	|
+| latitude                    	|             	|
+| longitude                   	|             	|
+| confidence                  	|             	|
+| iso3                        	|             	|
+| rurban_area_id              	|             	|
+| rurban_area_name            	|             	|
+| rurban_area_characteristics 	|             	|
+| nuts_source                 	|             	|
+| nuts_id                     	|             	|
+
+
+---
+
+## cib_patents_priority_attributes
+
+### Description: 
+
+The table Priority Patent Attributes gives a set of information related to the patent application and publication places and date.
+
+### Columns: 
+
+| Column Name                 	| Description 	|
+|-----------------------------	|-------------	|
+| appln_id             	|    Application unique identifier          	|
+| appln_kind                    	|             	|
+| appln_nr                    	|    Application numberNumber  issued  by  the  Patent  Authority  where  the National, International or Regional application was filed         	|
+| appln_auth                   	|   Office where the patent was applied          	|
+| earliest_filing_year                  	|     Date of the earliest filingThe  earliest  date  of  the  filing  dates  of  the  application itself,  its  international  application,  its  Paris  Convention priority  applications,  the  applications  with  which  it  is related   via   technical   relations   and   its   application continuations.  Only  directly  related  applications  are considered;  this  is  unlike  the  INPADOC  family,  where applications might also be indirectly related        	|
+| earliest_publn_auth                        	|             	|
+| earliest_publn_nr              	|             	|
+| earliest_publn_year            	|   Year  of the  earliest  publication  date  of  an application          	|
+| grant_year 	|             	|
+
+---
+
+## cib_patents_value
+
+### Description: 
+
+This tables proposes several indicators to estimate the patent application value.
+
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| appln_id                	|   Application unique identifier          	|
+| granted                 	|   "1" if there exists a publication of the grant; "0" otherwise          	|
+| nb_citing_docdb_fam                	|       Number of distinct DOCDB simple families citing at least one  of  the  publications  or  applications  of  the  DOCDB simple family of the current application      	|
+| singleton             	|   Priority patent without any extension          	|
+| transnat                      	|     Priority patent further extended in a second country at least        	|
+| ip5_family                    	|     Priority patent further extended in a second country at least  and  applied  in  one  IP5  patent  office  (info  of Inpadoc family)        	|
+| triadic                  	|      Priority patent for which the invention is protected at JPO, USPTO and JPO (info of Inpadoc family)       	|
+| ip5                   	|       Priority patent for which the invention is protected at  EPO,  USPTO,  SINO,  KINO  and  JPO  (info  of Inpadoc family)      	|
+| name_final                  	|             	|
+| us             	|    Priority patent for which the invention is protected at USPTO (info of Inpadoc family)         	|
+| ep                    	|     Priority patent for which the invention is protected at EPO, (info of Inpadoc family)        	|
+| jp                    	|    Priority patent for which the invention is protected at JPO, (info of Inpadoc family)         	|
+| cn                   	|       Priority patent for which the invention is protected at SINO (info of Inpadoc family)      	|
+| kr                  	|       Priority patent for which the invention is protected at KINO (info of Inpadoc family)      	|
+| pct_in_inpadoc_family                        	|     Priority patent for which the invention is protected using a PCT patent (info of Inpadoc family)        	|
+| nb_patents_docdb              	|    Number   patent   applications   in   docdb   family (restricted family         	|
+| nb_offices_docdb            	|     Number  of  distinct  patent  offices    where  patents where applied for in docdb family (restricted family)        	|
+| nb_patents_inpadoc 	|          Number patent applications in docdb family (extended family   	|
+| nb_offices_inpadoc                 	|    Number  of  distinct  patent  offices  where  patents where applied for in docdb family (extended family)         	|
+
+---
+
+## cib_patents_tech_class
+
+### Description: 
+
+The table with technological classification of patents relates patent to technology on a fractional counting based using existing classification built on IPC code
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| appln_id                	|  Application unique identifier           	|
+| ipc_class_symbol                 	|    Classification symbol according to the International Patent Classification, eights edition (entered into force January 1, 2006)         	|
+| frac_ipc                	|             	|
+| domains             	|     Fractional  counting  of  priority  patent  on  the  5 domain        	|
+| fields                      	|   Fractional counting of the priority patent on the 35 technological fields          	|
+| subfields                    	|      Fractional  counting  of  the  priority  patent  on  the  401 technological subfields       	|
+| ipc_class_level                  	|             	|
+
+---
+
+## cib_patents_textual_infromation
+
+### Description: 
+
+This tables of Textual Content includes the pieces of textual information useful for text mining. It aims at defining the core of the protected inventions, beside the predefined technological classifications
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| appln_id                	|   Application unique identifier          	|
+| appln_title                 	|   Title of application          	|
+| appln_title_lg                	|  Language of title of application           	|
+| appln_title_en             	|             	|
+| appln_title_en_source                      	|             	|
+| appln_abstract                    	|    Abstract of the application         	|
+| appln_abstract_lg                  	|    Language of abstract of application     |
+| appln_abstract_en                   	|             	|
+| appln_abstract_en_source                  	|             	|
+| ipc_description             	|    Aggregation of the hierarchical IPC description         	|
+
+---
+
+## cib_firms
+
+### Description: 
+
+Table CIB_firms gives a set of basic information related to the company: Its name, HQ country, industrial sector, size category (etc).
+
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| firmreg_id                	|  Firm unique identifier           	|
+| name                 	|  Current name of the company           	|
+| iso_ctry                	|   ISO2 country code of the HQs          	|
+| nace2_main_section             	| NACE2 main section of the company             	|
+| category                      	|   Size category of the company          	|
+| status                    	|   Status of the company activity (Active/Inactive)  |
+| quoted                  	|    Status of the company in terms of quotation (Y/N)         	|
+| i_guo                   	|    Industrial Global Ultimate Owner (if 1) (when the GUO is not a industrial firm. Ex GUO is a state, a family, an individual…)         	|
+| incorporation_date                  	|  Date of company incorporation           	|
+| last_year_account_available             	|   Most recent year for company account data          	|
+
+
+---
+
+## cib_firm_address
+
+### Description: 
+
+Table CIB_firm_address details the location of the company HQ (address, geo coordinates, regions, rurban area).
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| address_id                 	|   Address identifier          	|
+| firmreg_id                	|   Firm unique identifier          	|
+| address                	|             	|
+| label             	|             	|
+| latitude                    	|    Latitude generated by cortext gecoding         	|
+| longitude                   	|   Longitude generated by cortext gecoding          	|
+| confidence                  	|    Level of confidence of the result obtained by cortext geocoding         	|
+| city                    	|     City name of the HQ        	|
+| region                    	|     Region name of the HQ        	|
+| county                    	|     County name of the HQ        	|
+| iso3                        	|             	|
+| nuts_id                     	|             	|
+| nuts_source                 	|             	|
+| rurban_area_id              	|             	|
+| rurban_area_name            	|             	|
+
+---
+
+## cib_firm_name 
+
+### Description: 
+
+Table cib_firm_name proposes the various names (past or in use) for the companies.
+
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| firmreg_id                	|   Firm unique identifier          	|
+| previous_name             	|    Previous name of the company         	|
+| previous_name_date             	|    Date of the change of name         	|
+| aka_name                    	|      Alternative name of the company (Also known as)       	|
+
+---
+
+## cib_firm_sector 
+
+### Description: 
+
+This table lists the NACE codes and labels of the companies.
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| firmreg_id                	|   Firm unique identifier          	|
+| nace2_primary_code             	|    Primary NACE2 code (4 digits)         	|
+| nace2_primary_label             	|    Date of the change of name         	|
+| nace2_secondary_code                    	|      Secondary NACE2 code (4 digits)      	|
+| nace2_secondary_label                    	|      Label of the secondary NACE2 code       	|
+
+---
+
+## cib_firm_financial_data
+
+### Description: 
+
+Table cib_financial data gives information on the financial situation of the companies. It includes revenue, assets, number of employees, profit/loss, return on equity, return on assets. It includes also R&D investments of a set of companies.
+
+### Columns: 
+
+| column name                 	| description 	|
+|-----------------------------	|-------------	|
+| financial_id                	|     Financial identifier       	|
+| firmreg_id                 	|    Firm unique identifier         	|
+| year                	|   Year of the financial data          	|
+| operating_revenue             	|    Company operating revenue (thousand $)         	|
+| total_assests                      	|   Company total assets (th. $)          	|
+| number_employees                    	|             	|
+| pl_before_taxes                  	|      Profit or loss before taxes (th. $)
+       	|
+| roe_using_pl_before_taxes                   	|     Return on equity before taxes (th. $)        	|
+| roa_using_pl_before_taxes                  	|   Return on assets before taxes (th. $)          	|
