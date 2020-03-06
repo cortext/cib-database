@@ -234,24 +234,6 @@ Table cib_firm_name proposes the various names (past or in use) for the companie
 
 ---
 
-## cib_firm_sector 
-
-### Description: 
-
-This table lists the NACE codes and labels of the companies.
-
-### Columns: 
-
-| column name                 	| description 	|
-|-----------------------------	|-------------	|
-| firmreg_id                	|   Firm unique identifier          	|
-| nace2_primary_code             	|    Primary NACE2 code (4 digits)         	|
-| nace2_primary_label             	|    Date of the change of name         	|
-| nace2_secondary_code                    	|      Secondary NACE2 code (4 digits)      	|
-| nace2_secondary_label                    	|      Label of the secondary NACE2 code       	|
-
----
-
 ## cib_firm_financial_data
 
 ### Description: 
