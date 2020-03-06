@@ -10,13 +10,12 @@ The aim of **CIB** is to facilitate a dataset for the analysis on the transforma
 
 1. [About the RPD and ORBIS databases](#about-rpd-database) - A brief description about the two data sources used for generating CIB 
 2. [Overview diagram](#overview-diagram) - Simple diagram describing the steps taken for building CIB
-3. [Extraction of data from orbis](#extraction-of-data-from-orbis) - Criterias and methods for extracting orbis guo and subsidiaries
+3. [Data acquisition](#data-acquisition) - Criterias and methods for extracting orbis guo and subsidiaries
 4. [Matching entities using PAM System](#matching-entities-using-pam-system) - Description of the followed process in order to link entities
 5. [Database Modeling](#database-modeling) - The relational database design used for CIB database
 6. [Funding](#funding) - Banner with the funding organizations
 
 ## About the RPD and ORBIS databases
-
 
 ### ORBIS 
 
@@ -41,9 +40,20 @@ There are two repositories that includes the process for building RPD:
 </p>
 
 
-## Extraction of data from ORBIS
+## Data acquisition
 
-For creating **CIB** was only taken in account large companies and their consolidated subsidiaries, that means, the subsidiaries wherein a company have more than 50% stock purchased of the outstanding common stock, therefore the assets, liabilities, equity, income, expenses and cash flows of the parent company and its subsidiaries is presented as those of a single economic entity.
+The CIBv2 database uses several sources of information to identify the worldwide top corporate R&D performers and define their consolidated perimeters (3992 parent companies and their subsidiaries owned by the parent company with shares higher than 50.01%). The sources of company names are: the European R&D Industrial Scoreboard (editions from 2008 to 2014), the lists of the PCT top applicants published by the World Intellectual Property Organisation1 (editions from 2008 to 2014) and the ORBIS database (Bureau van Dijk). The CIB2 patent source is the Risis Patent Database (RPD), an enriched and simplified Patstat DB (Patstat April 2017). CIB2 benefits from all the enrichments and adjustments made in RPD (see the RPD documentation for details).
+
+### Scoreboard and WIPO
+
+For defining the list of the worldwide top corporate R&D performers we have follow the next steps
+
+    • The lists of the companies of the European Industrial R&D Investment Scoreboard for seven editions from 2008 to 2014. Each Scoreboard edition ranks a number of companies (European firms and non European firms) which have invested the largest sums in R&D during the previous year. We have ended with approximatively with 17 000 company names with redundancy over the editions and with the World and European lists.
+    • The lists of the top PCT patent applicants provided yearly by WIPO (i.e. applicants applying for a minimum of 10 PCT patents in a given year). About 13 500 company names were retrieved when adding names given from 2008 to 2014. We ended with approximatively 30 000 company names with a lot of duplicates (several companies were present in both sources for several years with the same name or different names).
+
+### Orbis
+
+We have first cleaned and harmonised the company names. Then, using the Orbis database we have identified for all the names, the parent company, most often the Global Ultimate Owner (GUO) when the GUO was an industrial company or the higher intermediate industrial company owned by the GUO when the GUO was not an industrial company but a country, a family or a holding company. In that latter case, the parent company was tagged as a IGUO (industrial GUO). The final list contains 3992 parent companies.
 
 The consolidated perimeters of the 3992 parent companies (GUO or IGUO) were obtained using the Orbis database. It includes all subsidiaries with a majority share capital owned by the parent companies (share >50.01%). The consolidated perimeter of the parent companies was determined based on information available in Orbis in autumn 2017 (the perimeter for a few firms were built a bit later). The names of the parent companies as well as their subsidiaries were downloaded from Orbis. Moreover a set of available variables was also retrieved (company name, location, sectors, employees, financial data…). We have ended with approximately 320 000 different company names (GUOs, IGUOs and subsidiaries).
 
