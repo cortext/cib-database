@@ -12,6 +12,7 @@ BEGIN
 
     -- counter
     SET x = 1;
+
     SET @table = tables_name;
 
     -- List of columns name
