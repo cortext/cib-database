@@ -136,9 +136,9 @@ DEFAULT charset=utf8;
 /*
 
 The tmp_cluttered_financial_data table now is created dynamically using
-a stored procedure, please refer to: 
+a stored procedure, please refer to:
 
-   src/sql/stored_procedures/dynamic_financial_table.sql 
+src/sql/stored_procedures/dynamic_financial_table.sql
 
 
 CREATE TABLE tmp_cluttered_financial_data
@@ -195,6 +195,15 @@ CREATE TABLE tmp_prepare_address_to_geocode
 (
     guo_orbis_id VARCHAR(255) NULL,
     address      TEXT CHARACTER SET utf8
+)
+engine=myisami
+DEFAULT charset=utf8;
+
+
+CREATE TABLE tmp_firmreg_id
+(
+    guo_orbis_id VARCHAR(255) NULL,
+    firmreg_id   VARCHAR(255) NULL
 )
 engine=myisam
 DEFAULT charset=utf8;

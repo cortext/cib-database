@@ -68,3 +68,9 @@ IGNORE 1 LINES;
 
 /* ================================================ */
 
+/* LOAD FIRMREG IDENTIFIERS */
+
+LOAD DATA LOCAL INFILE '../data/firmreg_bvdid.csv'                                 
+INTO TABLE `firmreg_id` FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+IGNORE 1 LINES;
