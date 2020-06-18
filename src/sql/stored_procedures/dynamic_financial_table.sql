@@ -1,5 +1,6 @@
 CREATE PROCEDURE dynamic_financial_table(IN tables_name VARCHAR(255),
     IN number_of_columns INT(2))
+
 BEGIN
     DECLARE x  INT;
     DECLARE operating_column  LONGTEXT DEFAULT '';
@@ -26,6 +27,8 @@ BEGIN
     SET @last_year_usd = '_last_year_usd';
 
     -- No dynamic columns
+    SET @id = 'n VARCHAR(255) NULL,';
+    SET @company_name = 'name VARCHAR(255) NULL,';
     SET @guo_orbis = 'guo_orbis_id VARCHAR(255) NULL,';
     SET @last_year = 'last_year VARCHAR(255) NULL,';
 
@@ -42,35 +45,29 @@ BEGIN
     SET operating_column = CONCAT(operating_column, @str_operating_revenue,
         @last_year_usd, x, ' TEXT NULL,');
 
-    -- Assets
-    SET assests_column = CONCAT(assests_column, @str_total_assests,
-        @last_year_eur, x, ' TEXT NULL,');
-    SET assests_column = CONCAT(assests_column, @str_total_assests,
-        @last_year_usd, x, ' TEXT NULL,');
-
     -- Net_income
     SET net_income_column = CONCAT(net_income_column, @str_net_income,
         @last_year_eur, x, ' TEXT NULL,');
     SET net_income_column = CONCAT(net_income_column, @str_net_income,
         @last_year_usd, x, ' TEXT NULL,');
 
+    -- Assets
+    SET assests_column = CONCAT(assests_column, @str_total_assests,
+        @last_year_eur, x, ' TEXT NULL,');
+    SET assests_column = CONCAT(assests_column, @str_total_assests,
+        @last_year_usd, x, ' TEXT NULL,');
+
     -- Employees
     SET employees_column = CONCAT(employees_column, @str_number_employees,
-        @last_year_eur, x, ' TEXT NULL,');
-    SET employees_column = CONCAT(employees_column, @str_number_employees,
-        @last_year_usd, x, ' TEXT NULL,');
+        x, ' TEXT NULL,');
 
     --  ROE
     SET roe_column = CONCAT(roe_column, @roe_before_taxes_percentage,
-        @last_year_eur, x, ' TEXT NULL,');
-    SET roe_column = CONCAT(roe_column, @roe_before_taxes_percentage,
-        @last_year_usd, x, ' TEXT NULL,');
+        x, ' TEXT NULL,');
 
     --  ROA
     SET roa_column = CONCAT(roa_column, @roa_before_taxes,
-        @last_year_eur, x, ' TEXT NULL,');
-    SET roa_column = CONCAT(roa_column, @roa_before_taxes,
-        @last_year_usd, x, ' TEXT NULL,');
+        x, ' TEXT NULL,');
 
     SET  x = x + 1;
 
@@ -81,7 +78,7 @@ SET roa_column = TRIM(',' FROM roa_column);
 
 -- Concatenate all the columns that were dynamically generated
 SET @query :=CONCAT('CREATE TABLE ',@table,
-    '( ',@guo_orbis, @last_year, operating_column, assests_column,
+    '( ',@id, @company_name, @guo_orbis, @last_year, operating_column, assests_column,
         net_income_column, employees_column, roe_column, roa_column, ');');
 
 -- SELECT @query;
