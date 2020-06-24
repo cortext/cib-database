@@ -98,22 +98,21 @@ CREATE TABLE `cib_firm_sector`
 engine=innodb DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;
 
 
-
-CREATE TABLE `cib_firm_financial_data`
-(
-    `guo_orbis_id` VARCHAR(16) CHARACTER SET utf8 NOT NULL,
-    `year`         INT(4) DEFAULT NULL,
-    `operating_revenue` FLOAT DEFAULT NULL,
-    `total_assests` FLOAT DEFAULT NULL,
-    `number_employees` INT(11) DEFAULT NULL,
-    `pl_before_taxes` FLOAT DEFAULT NULL,
-    `roe_using_pl_before_taxes` FLOAT DEFAULT NULL,
-    `roa_using_pl_before_taxes` FLOAT DEFAULT NULL,
-    KEY `cib_firm_financial_data_guo_orbis_id_idx` (`guo_orbis_id`) using btree,
-    CONSTRAINT `cib_firm_financial_data_fk` FOREIGN KEY (`guo_orbis_id`) REFERENCES `cib_firms` (`guo_orbis_id`)
-)
-engine=innodb DEFAULT charset=utf8 COLLATE=utf8_unicode_ci;
-
+CREATE TABLE `cib_firm_financial_data` (
+  `firmreg_id` varchar(16) DEFAULT NULL,
+  `year` int(4) DEFAULT NULL,
+  `operating_revenue_eur` float DEFAULT NULL,
+  `operating_revenue_usd` float DEFAULT NULL,
+  `net_income_eur` float DEFAULT NULL,
+  `net_income_usd` float DEFAULT NULL,
+  `total_assests_eur` float DEFAULT NULL,
+  `total_assests_usd` float DEFAULT NULL,
+  `number_employees` int(11) DEFAULT NULL,
+  `roe_percent_before_taxes` float DEFAULT NULL,
+  `roa_percent_before_taxes` float DEFAULT NULL,
+  `r&d_investment_eur_millions` varchar(255) DEFAULT NULL,
+  KEY `cib_firm_financial_data_firmreg_id_idx` (`firmreg_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `cib_patents_actors`
