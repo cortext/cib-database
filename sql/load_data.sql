@@ -56,8 +56,8 @@ INTO TABLE `tmp_cib_firm_sector` FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE '../data/Export 31_01_2020 17_41_9_firms_finance.csv' 
-INTO TABLE `tmp_cib_firm_financial_data_cluttered` FIELDS TERMINATED BY ','
+LOAD DATA LOCAL INFILE '../data/orbis_data_sample/Export 09_06_2020_finance.csv' 
+INTO TABLE `tmp_cluttered_financial_data` FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
 

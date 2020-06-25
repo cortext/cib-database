@@ -6,7 +6,7 @@ BEGIN
     SET x = 1;
 
     loop_label:  LOOP
-    IF  x > number_of_pivot THEN
+    IF  x > number_of_pivots THEN
         LEAVE  loop_label;
     END  IF;
 
