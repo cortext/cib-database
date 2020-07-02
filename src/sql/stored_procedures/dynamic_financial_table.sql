@@ -43,20 +43,14 @@ BEGIN
 
     SET operating_column = CONCAT(operating_column, @str_operating_revenue,
         @last_year_eur, x, ' TEXT NULL,');
-    SET operating_column = CONCAT(operating_column, @str_operating_revenue,
-        @last_year_usd, x, ' TEXT NULL,');
 
     -- Net_income
     SET net_income_column = CONCAT(net_income_column, @str_net_income,
         @last_year_eur, x, ' TEXT NULL,');
-    SET net_income_column = CONCAT(net_income_column, @str_net_income,
-        @last_year_usd, x, ' TEXT NULL,');
 
     -- Assets
     SET assests_column = CONCAT(assests_column, @str_total_assests,
         @last_year_eur, x, ' TEXT NULL,');
-    SET assests_column = CONCAT(assests_column, @str_total_assests,
-        @last_year_usd, x, ' TEXT NULL,');
 
     -- Employees
     SET employees_column = CONCAT(employees_column, @str_number_employees,

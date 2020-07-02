@@ -117,18 +117,18 @@ DEFAULT charset=utf8;
 
 
 CREATE TABLE `tmp_cib_firm_financial_data` (
-  `firmreg_id` varchar(16) NOT NULL,
-  `year` varchar(255) DEFAULT NULL,
-  `operating_revenue_eur` varchar(255) DEFAULT NULL,
-  `operating_revenue_usd` varchar(255) DEFAULT NULL,
-  `net_income_eur` varchar(255) DEFAULT NULL,
-  `net_income_usd` varchar(255) DEFAULT NULL,
-  `total_assests_eur` varchar(255) DEFAULT NULL,
-  `total_assests_usd` varchar(255) DEFAULT NULL,
-  `number_employees` varchar(255) DEFAULT NULL,
-  `roe_percent_before_taxes` varchar(255) DEFAULT NULL,
-  `roa_percent_before_taxes` varchar(255) DEFAULT NULL
-  `r&d_investment_eur_millions` varchar(255) DEFAULT NULL
+    `firmreg_id` varchar(16) NOT NULL,
+    `year` varchar(255) DEFAULT NULL,
+    `operating_revenue_eur` varchar(255) DEFAULT NULL,
+    `operating_revenue_usd` varchar(255) DEFAULT NULL,
+    `net_income_eur` varchar(255) DEFAULT NULL,
+    `net_income_usd` varchar(255) DEFAULT NULL,
+    `total_assests_eur` varchar(255) DEFAULT NULL,
+    `total_assests_usd` varchar(255) DEFAULT NULL,
+    `number_employees` varchar(255) DEFAULT NULL,
+    `roe_percent_before_taxes` varchar(255) DEFAULT NULL,
+    `roa_percent_before_taxes` varchar(255) DEFAULT NULL,
+    `r&d_investment_eur_millions` varchar(255) DEFAULT NULL
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -212,22 +212,22 @@ DEFAULT charset=utf8;
 
 
 CREATE TABLE `tmp_r&d_investments_data`
-  (
-     firmreg_id    VARCHAR(255) NULL,
-     `r&d_2017`    VARCHAR(255) NULL,
-     `r&d_2016`    VARCHAR(255) NULL,
-     `r&d_2015`    VARCHAR(255) NULL,
-     `r&d_2014`    VARCHAR(255) NULL,
-     `r&d_2013`    VARCHAR(255) NULL,
-     `r&d_2012`    VARCHAR(255) NULL,
-     `r&d_2011`    VARCHAR(255) NULL,
-     `r&d_2010`    VARCHAR(255) NULL,
-     `r&d_2009`    VARCHAR(255) NULL,
-     `r&d_2008`    VARCHAR(255) NULL,
-     `r&d_2007`    VARCHAR(255) NULL,
-	 `r&d_2006`    VARCHAR(255) NULL,
-	 `r&d_2005`    VARCHAR(255) NULL,
-	 `r&d_2004`    VARCHAR(255) NULL
-  )
+(
+    firmreg_id    VARCHAR(255) NULL,
+    `r&d_2017`    VARCHAR(255) NULL,
+    `r&d_2016`    VARCHAR(255) NULL,
+    `r&d_2015`    VARCHAR(255) NULL,
+    `r&d_2014`    VARCHAR(255) NULL,
+    `r&d_2013`    VARCHAR(255) NULL,
+    `r&d_2012`    VARCHAR(255) NULL,
+    `r&d_2011`    VARCHAR(255) NULL,
+    `r&d_2010`    VARCHAR(255) NULL,
+    `r&d_2009`    VARCHAR(255) NULL,
+    `r&d_2008`    VARCHAR(255) NULL,
+    `r&d_2007`    VARCHAR(255) NULL,
+    `r&d_2006`    VARCHAR(255) NULL,
+    `r&d_2005`    VARCHAR(255) NULL,
+    `r&d_2004`    VARCHAR(255) NULL
+)
 engine=myisam
 DEFAULT charset=utf8;
