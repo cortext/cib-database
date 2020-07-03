@@ -6,14 +6,14 @@ Concat(address_line1, ', ', address_line2, ', ', address_line3, ', ',
     address_line4) AS address
 FROM   tmp_orbis_firm_address cfa;
 
-UPDATE prepare_address_to_geocode
+UPDATE tmp_prepare_address_to_geocode
 SET address = TRIM(TRAILING ', ' FROM address);
 
 INSERT INTO tmp_address_to_geocode
 SELECT A.guo_orbis_id,
 CONCAT(A.address, ', ', B.postcode, ', ', B.city, ', ', B.country_region) as address
-FROM prepare_address_to_geocode A
-INNER JOIN orbis_firm_address B ON A.guo_orbis_id = B.guo_orbis_id;
+FROM tmp_prepare_address_to_geocode A
+INNER JOIN tmp_orbis_firm_address B ON A.guo_orbis_id = B.guo_orbis_id;
 
 
 /*
@@ -62,3 +62,6 @@ CHARACTER SET utf8
 fields TERMINATED BY ','
 ENCLOSED BY '"'
 IGNORE 1 LINES;
+
+INSERT INTO cib_firm_address 
+SELECT * FROM tmp_cib_firm_address;

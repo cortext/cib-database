@@ -202,6 +202,30 @@ engine=myisami
 DEFAULT charset=utf8;
 
 
+CREATE TABLE `tmp_address_to_geocode` (
+  `guo_orbis_id` varchar(255) DEFAULT NULL,
+  `address` longtext
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `tmp_cib_firm_address` (
+  `firmreg_id` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
+  `confidence` varchar(255) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `region` varchar(50) DEFAULT NULL,
+  `country` varchar(50) DEFAULT NULL,
+  `iso3` varchar(255) DEFAULT NULL,
+  `nuts_id` varchar(255) DEFAULT NULL,
+  `nuts_source` varchar(255) DEFAULT NULL,
+  `rurban_area_id` varchar(255) DEFAULT NULL,
+  `rurban_area_name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE tmp_firmreg_id
 (
     guo_orbis_id VARCHAR(255) NULL,
