@@ -1,4 +1,4 @@
-CREATE DEFINER=`gnupablo`@`%` PROCEDURE `CIB_2020_v2_lab`.`unit_test`(IN tables_type char(50),
+CREATE PROCEDURE unit_test(IN tables_type char(50),
 IN minimum_absolute_tolerance float)
 BEGIN
 	

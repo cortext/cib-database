@@ -27,4 +27,4 @@
 DROP TABLE tmp_pam_results_guo, tmp_pam_results_subsidiaries, tmp_cib_firm,
 tmp_cib_firm_names, tmp_cib_firm_sector, tmp_cib_firm_financial_data,
 tmp_cluttered_financial_data, tmp_orbis_firm_address,
-tmp_prepare_address_to_geocode; 
+tmp_prepare_address_to_geocode, tmp_firmreg_id, `tmp_r&d_investments_data`; 
